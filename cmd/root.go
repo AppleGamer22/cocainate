@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/spf13/cobra"
 )
 
-var hours, minutes, seconds uint
+var duration time.Duration
 
 var RootCommand = &cobra.Command{
 	Use:   "cocainate",
@@ -14,12 +15,11 @@ var RootCommand = &cobra.Command{
 	Long:  "keep screen awake",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("hi")
+		fmt.Printf("%v\n", duration)
 		return nil
 	},
 }
 
 func init() {
-	RootCommand.Flags().UintVarP(&hours, "hours", "h", 0, "number of hours")
-	RootCommand.Flags().UintVarP(&minutes, "minutes", "m", 0, "number of minutes")
-	RootCommand.Flags().UintVarP(&seconds, "seconds", "s", 0, "seconds")
+	RootCommand.Flags().DurationVarP(&duration, "duration", "d", 0, "duration with units ns, us (or µs), ms, s, m, h")
 }
