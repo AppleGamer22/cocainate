@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"runtime"
 
 	"github.com/spf13/cobra"
 )
 
-const Version = "1.0.0"
+var Version = "development"
+var Hash = "development"
 
 var verbose bool
 
@@ -15,7 +17,14 @@ var versionCommand = &cobra.Command{
 	Short: "print version",
 	Long:  "print version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(Version)
+		if verbose {
+			fmt.Printf("version: \t%s\n", Version)
+			fmt.Printf("commit: \t%s\n", Hash)
+			fmt.Printf("compiler: \t%s (%s)\n", runtime.Version(), runtime.Compiler)
+			fmt.Printf("platform: \t%s/%s\n", runtime.GOARCH, runtime.GOOS)
+		} else {
+			fmt.Println(Version)
+		}
 	},
 }
 
