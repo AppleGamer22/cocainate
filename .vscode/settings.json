@@ -1,0 +1,9 @@
+{
+	"cSpell.words": [
+		"rber",
+		"rberrors"
+	],
+	"files.associations": {
+		"*.cff": "yaml"
+	}
+}

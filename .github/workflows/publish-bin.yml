@@ -1,0 +1,41 @@
+name: Publish Binaries
+on:
+  release:
+    types: [published]
+jobs:
+  publish-go-bin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Source Code
+        uses: actions/checkout@v2.3.4
+      - name: Set-up Go
+        uses: actions/setup-go@v2.1.3
+        with:
+          go-version: '1.16.5'
+      - name: Build for Linux
+        run: make linux
+      - name: Upload Linux Release Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: rb_${{steps.get_version.outputs.VERSION}}_linux_amd64
+          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_linux_amd64
+          if-no-files-found: error
+      - name: Build for macOS
+        run: make darwin
+      - name: Upload macOS Release Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: rb_${{steps.get_version.outputs.VERSION}}_darwin_amd64
+          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_darwin_amd64
+          if-no-files-found: error
+      - name: Build for Windows
+        run: make windows
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
+      - name: Upload Windows Release Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: rb_${{steps.get_version.outputs.VERSION}}_windows_amd64.exe
+          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_windows_amd64.exe
+          if-no-files-found: error

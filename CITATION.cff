@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Bornstein
+    given-names: Omri
+  - family-names: Bornstein
+    given-names: Amir
+  - family-names: Bornstein
+    given-names: Ya'ir
+title: recursive-backup
+version: 1.0.0
+date-released: 2021-07-12
+url: https://github.com/AppleGamer22/recursive-backup
