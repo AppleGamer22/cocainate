@@ -11,31 +11,20 @@ jobs:
       - name: Set-up Go
         uses: actions/setup-go@v2.1.3
         with:
-          go-version: '1.16.5'
-      - name: Build for Linux
-        run: make linux
-      - name: Upload Linux Release Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: rb_${{steps.get_version.outputs.VERSION}}_linux_amd64
-          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_linux_amd64
-          if-no-files-found: error
-      - name: Build for macOS
-        run: make darwin
-      - name: Upload macOS Release Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: rb_${{steps.get_version.outputs.VERSION}}_darwin_amd64
-          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_darwin_amd64
-          if-no-files-found: error
-      - name: Build for Windows
-        run: make windows
+          go-version: "1.17.5"
+      - name: Build
+        run: make build
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
-      - name: Upload Windows Release Artifact
-        uses: actions/upload-artifact@v2.2.4
+      - name: Upload Release Artifacts
+        uses: softprops/action-gh-release@v1
         with:
-          name: rb_${{steps.get_version.outputs.VERSION}}_windows_amd64.exe
-          path: ./target/rb_${{steps.get_version.outputs.VERSION}}_windows_amd64.exe
-          if-no-files-found: error
+          files: |
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_linux_amd64
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_linux_arm64
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_linux_riscv64
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_mac_amd64
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_mac_arm64
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_windows_amd64.exe
+            ./bin/cocainate_${{steps.get_version.outputs.VERSION}}_windows_arm64.exe

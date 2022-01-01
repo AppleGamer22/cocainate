@@ -1,7 +1,9 @@
 {
 	"cSpell.words": [
+		"cocainate",
 		"rber",
-		"rberrors"
+		"rberrors",
+		"riscv"
 	],
 	"files.associations": {
 		"*.cff": "yaml"
