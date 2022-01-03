@@ -3,45 +3,37 @@ package internal
 import (
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
-	"github.com/godbus/dbus/v5"
+	dbus "github.com/godbus/dbus/v5"
 )
 
 const (
-	screenSaverPath = "org.freedesktop.ScreenSaver"
-	inhibit         = "org.freedesktop.ScreenSaver.Inhibit"
-	uninhibit       = "org.freedesktop.ScreenSaver.UnInhibit"
+	path        = "/org/freedesktop/ScreenSaver"
+	screensaver = "org.freedesktop.ScreenSaver"
+	inhibit     = "org.freedesktop.ScreenSaver.Inhibit"
+	uninhibit   = "org.freedesktop.ScreenSaver.UnInhibit"
 )
 
 // https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html
+//
+// https://youtu.be/-bEzHG2u8XA
 func Start(duration time.Duration, pid int) error {
-	connection, err := dbus.ConnectSessionBus()
+	connection, err := dbus.SessionBus()
 	if err != nil {
 		return err
 	}
 	defer connection.Close()
-	// headers := make(map[dbus.HeaderField]dbus.Variant)
-	// headers[dbus.FieldDestination] = dbus.MakeVariant(inhibit)
-	// // headers[dbus.FieldInterface] = dbus.MakeVariant()
-	// message := dbus.Message{}
-	// message.Type = dbus.TypeMethodCall
-	// message.Headers = headers
-
-	// if err := connection.Emit(screenSaverPath, inhibit, "cocainate", "cocainate is running"); err != nil {
-	// 	return err
-	// }
-	call1 := connection.BusObject().Call(inhibit, dbus.FlagAllowInteractiveAuthorization, "cocainate", "cocainate is running")
-	if call1.Err != nil {
+	object := connection.Object(screensaver, path)
+	call := object.Call(inhibit, 0, "cocainate", "cocainate is running")
+	var cookie uint32
+	if err := call.Store(&cookie); err != nil {
 		return err
 	}
-	cookie := call1.Body
 	signals := make(chan os.Signal, 1)
-	signal.Notify(signals, os.Interrupt)
+	signal.Notify(signals, syscall.SIGINT, syscall.SIGTERM)
 	<-signals
-	call2 := connection.BusObject().Call(uninhibit, dbus.FlagAllowInteractiveAuthorization, cookie...)
-	if call2.Err != nil {
-		return err
-	}
-	return nil
+	call = object.Call(uninhibit, 0, cookie)
+	return call.Err
 }
