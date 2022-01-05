@@ -2,6 +2,6 @@ package internal
 
 import "fmt"
 
-func Print() {
+func (session *Session) Start() {
 	fmt.Println("d")
 }

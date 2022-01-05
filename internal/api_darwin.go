@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func Start(duration time.Duration, pid int) error {
+func (session *Session) Start() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	signals := make(chan os.Signal, 1)
