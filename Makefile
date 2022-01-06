@@ -25,4 +25,7 @@ windows:
 	GOOS=windows GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_amd64.exe
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
 
-.PHONY: all build test linux mac windows
+clean:
+	rm -r bin
+
+.PHONY: all build test clean linux mac windows
