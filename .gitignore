@@ -1,9 +1,3 @@
-files.json
-Images
 *.csv
-a
-b
-bin
+*.exe
 vendor
-rb_*
-rb.ini
