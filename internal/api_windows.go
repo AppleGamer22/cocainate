@@ -3,7 +3,6 @@ package internal
 import (
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 )
@@ -25,8 +24,8 @@ const (
 func (session *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
-	_, _, err := setThreadExecStateProc.Call(uintptr(esContinuous | esSystemRequired))
-	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
+	r1, _, err := setThreadExecStateProc.Call(uintptr(esContinuous | esSystemRequired))
+	if r1 == 0 {
 		return err
 	}
 
@@ -46,8 +45,8 @@ func (session *Session) Start() error {
 	}()
 
 	<-exit
-	_, _, err = setThreadExecStateProc.Call(uintptr(esContinuous))
-	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
+	r1, _, err = setThreadExecStateProc.Call(uintptr(esContinuous))
+	if r1 == 0 {
 		return err
 	}
 	return nil
