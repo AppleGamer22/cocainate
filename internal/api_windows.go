@@ -26,7 +26,7 @@ func (session *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
 	_, _, err := setThreadExecStateProc.Call(uintptr(ESContinuous | ESSystemRequired))
-	if err != nil && !strings.Contains(err.Error(), " operation completed successfully") {
+	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
 		return err
 	}
 
@@ -47,7 +47,7 @@ func (session *Session) Start() error {
 
 	<-exit
 	_, _, err = setThreadExecStateProc.Call(uintptr(ESContinuous))
-	if err != nil && !strings.Contains(err.Error(), " operation completed successfully") {
+	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
 		return err
 	}
 	return nil
