@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ESContinuous     = 0x80000000
-	ESSystemRequired = 0x00000001
+	esContinuous     = 0x80000000
+	esSystemRequired = 0x00000001
 )
 
 // Start
@@ -25,7 +25,7 @@ const (
 func (session *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
-	_, _, err := setThreadExecStateProc.Call(uintptr(ESContinuous | ESSystemRequired))
+	_, _, err := setThreadExecStateProc.Call(uintptr(esContinuous | esSystemRequired))
 	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
 		return err
 	}
@@ -46,7 +46,7 @@ func (session *Session) Start() error {
 	}()
 
 	<-exit
-	_, _, err = setThreadExecStateProc.Call(uintptr(ESContinuous))
+	_, _, err = setThreadExecStateProc.Call(uintptr(esContinuous))
 	if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
 		return err
 	}
