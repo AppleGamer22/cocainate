@@ -21,7 +21,7 @@ const (
 //
 // https://stackoverflow.com/questions/45436158/how-to-to-stop-a-machine-from-sleeping-hibernating-for-execution-period
 //
-// https://github.com/iamacarpet/go-win64api/blob/master/process.go
+// https://github.com/iamacarpet/go-win64api/blob/master/process.go#L143-L150
 func (session *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
