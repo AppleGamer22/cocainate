@@ -1,3 +1,4 @@
+SHELL:=/bin/bash
 VERSION:=1.0.0
 PACKAGE:="github.com/AppleGamer22/cocainate"
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
@@ -24,6 +25,24 @@ mac:
 windows:
 	GOOS=windows GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_amd64.exe
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
+
+define package_bins
+	for file in bin/*; do \
+		if [[ "$$file" == *".exe"* ]]; then \
+			mv $$file cocainate.exe; \
+			zip $$file.zip cocainate.exe; \
+			short_file_name=cocainate.exe; \
+		else \
+			mv $$file cocainate; \
+			tar -czf $$file.tar.gz cocainate cocainate.8; \
+			short_file_name=cocainate; \
+		fi; \
+		rm $$short_file_name; \
+	done
+endef
+
+package: build
+	$(package_bins)
 
 clean:
 	rm -r bin
