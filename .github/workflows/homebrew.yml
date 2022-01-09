@@ -1,0 +1,9 @@
+name: Publish to Homebrew
+on:
+  workflow_run:
+    workflows: ["Release to GitHub"]
+    types:
+      - completed
+jobs:
+  homebrew_publish:
+    runs-on: macos-latest
