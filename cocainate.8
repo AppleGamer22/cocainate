@@ -1,0 +1,69 @@
+.TH "COCAINATE" "8" "2022\-03\-12" "cocainate v1.0.0" "cocainate Manual"
+.nh
+.ad l
+.SH NAME
+cocainate \- Cross\-platform caffeinate alternative
+
+.SH SYNOPSIS
+\fIcocainate\fR [options]
+.sp
+\fIcocainate\fR version [options]
+.sp
+\fIcocainate\fR
+
+.SH DESCRIPTION
+cocainate is a command-line utility that communicates with OS-level APIs
+to keep the screen awake.
+
+.SH COCAINATE OPTIONS
+.B \-d, \-\-duration
+Accepts a duration  for timed screensaver inhibitation.
+
+Acceptable units include:
+
+.IP \[bu] 2
+nanoseconds: `ns`
+.IP \[bu]
+microseconds: `us` (or `µs`)
+.IP \[bu]
+milliseconds: `ms`
+.IP \[bu]
+seconds: `s`
+.IP \[bu]
+minutes: `m`
+.IP \[bu]
+hours: `h`
+
+.B \-\-pid
+Accepts a duration for screensaver inhibitation while the provided process is runs.
+
+.B \-h, \-\-help
+Displays documentation.
+
+.SH VERSION OPTIONS
+.B \-v, \-\-verbose
+Displays cocainate version
+
+.SH EXAMPLES
+.TP
+cocainate
+Keep the screen awake until stoped
+
+.TP
+cocainate -d 10h
+Keep the screen awake for 10 hours
+.TP
+cocainate -d 1h10m10s
+Keep the screen awake for 1 hour, 10 minutes and 10 seconds
+.TP
+cocainate -d 1us
+Keep the screen awake for 1 microsecond
+.TP
+cocainate --pid 1234
+Keep the screen awake while process 1234 runs
+
+.SH BUGS
+Please report bugs to our GitHub page https://github.com/AppleGamer22/cocainate/issues
+
+.SH AUTHORS
+Omri Bornstein <omribor@gmail.com>
