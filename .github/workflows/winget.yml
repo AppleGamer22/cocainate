@@ -7,3 +7,9 @@ on:
 jobs:
   winget_publish:
     runs-on: windows-latest
+    steps:
+      - name: Pull Source Code
+        uses: actions/checkout@v2.3.4
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
