@@ -15,8 +15,8 @@ optdepends=(
 provides=('cocainate')
 conflicts=('cocainate')
 
-source_x86_64=("https://github.com/AppleGamer22/cocainate/releases/download/${pkgver}/${pkgname}_${pkgver}_linux_amd64.tar.gz")
-source_aarch64=("https://github.com/AppleGamer22/cocainate/releases/download/${pkgver}/${pkgname}_${pkgver}_linux_arm64.tar.gz")
+source_x86_64=("https://github.com/AppleGamer22/cocainate/releases/download/${pkgver}/cocainate_${pkgver}_linux_amd64.tar.gz")
+source_aarch64=("https://github.com/AppleGamer22/cocainate/releases/download/${pkgver}/cocainate_${pkgver}_linux_arm64.tar.gz")
 
 # sha256sums_x86_64=('d15be2b446b19fcf2677c3d14f524f930738054aa30d96beef63ed5481d70321')
 # sha256sums_aarch64=('38c720bd3a84cbb29f42b4a48aee31d27b687bcc7658a4769861022790ea5d8e')
@@ -25,15 +25,12 @@ source_aarch64=("https://github.com/AppleGamer22/cocainate/releases/download/${p
 
 package() {
 	# Binary
-	install -Dm755 "cocainate" "${pkgdir}/usr/bin/cocainate"
+	install -Dm755 cocainate "${pkgdir}/usr/bin/cocainate"
 	# Manual Page
-	install -Dm644 "cocainate.8" "${pkgdir}/usr/share/man/man8/cocainate.8"
+	install -Dm644 cocainate.8 "${pkgdir}/usr/share/man/man8/cocainate.8"
 
 	# Shell Aautocompletion
-	cocainate completion bash > "${pkgdir}/usr/share/bash-completion/completions/cocainate"
-	chmod 644 "${pkgdir}/usr/share/bash-completion/completions/cocainate"
-	cocainate completion fish > "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
-	chmod 644 "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
-	cocainate completion zsh > "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
-	chmod 644 "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
+	install -Dm644 cocainate.bash "${pkgdir}/usr/share/bash-completion/completions/cocainate"
+	install -Dm644 cocainate.fish "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
+	install -Dm644 cocainate.zsh "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
 }

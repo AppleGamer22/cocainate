@@ -3,8 +3,6 @@ VERSION:=1.0.0
 PACKAGE:="github.com/AppleGamer22/cocainate"
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
 
-all: test build
-
 build: linux mac windows
 
 test:
@@ -27,24 +25,34 @@ windows:
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
 
 define package_bins
-	for file in bin/*; do \
+	for file in bin/cocainate_$(VERSION)*; do \
 		if [[ "$$file" == *".exe"* ]]; then \
 			mv $$file cocainate.exe; \
-			zip $$file.zip cocainate.exe; \
+			zip $$file.zip cocainate.exe cocainate.ps1; \
 			short_file_name=cocainate.exe; \
 		else \
 			mv $$file cocainate; \
-			tar -czf $$file.tar.gz cocainate cocainate.8; \
+			tar -czf $$file.tar.gz cocainate cocainate.bash cocainate.fish cocainate.zsh cocainate.8; \
 			short_file_name=cocainate; \
 		fi; \
 		rm $$short_file_name; \
 	done
 endef
 
-package: build
+package: build completion
 	$(package_bins)
+	rm -f cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
+
+completion:
+	go build -v $(LDFLAGS) -o ./bin/cocainate
+	./bin/cocainate completion bash > cocainate.bash
+	./bin/cocainate completion fish > cocainate.fish
+	./bin/cocainate completion zsh > cocainate.zsh
+	./bin/cocainate completion powershell > cocainate.ps1
+	rm bin/cocainate
+
 
 clean:
-	rm -r bin
+	rm -rf bin cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
 
-.PHONY: all build test clean linux mac windows
+.PHONY: all build test clean package linux mac windows

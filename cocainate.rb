@@ -1,8 +1,7 @@
+# inspired by https://github.com/go-task/homebrew-tap/blob/master/Formula/go-task.rb
 class Cocainate < Formula
 	desc "Cross-platform caffeinate alternative. Pre-compiled."
 	homepage "https://github.com/AppleGamer22/cocainate"
-	url "https://example.com/foo-0.1.tar.gz"
-	sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 	license "GPL-3.0-only"
 	head "https://github.com/AppleGamer22/cocainate.git", branch: "master"
 	version "1.0.0"
@@ -10,18 +9,38 @@ class Cocainate < Formula
 	depends_on "bash" => :optional
 	depends_on "fish" => :optional
 	depends_on "zsh" => :optional
+	depends_on "go" => :build
+
+	on_macos do
+		if Hardware::CPU.intel?
+			url "https://github.com/AppleGamer22/cocainate/releases/download/#{version}/cocainate_#{version}_mac_amd64.tar.gz"
+		end
+
+		if Hardware::CPU.arm?
+			url "https://github.com/AppleGamer22/cocainate/releases/download/#{version}/cocainate_#{version}_mac_arm64.tar.gz"
+		end
+	end
 
 	on_linux do
 		depends_on "dbus"
+
+		if Hardware::CPU.intel?
+			url "https://github.com/AppleGamer22/cocainate/releases/download/#{version}/cocainate_#{version}_linux_amd64.tar.gz"
+		end
+
+		if Hardware::CPU.arm?
+			url "https://github.com/AppleGamer22/cocainate/releases/download/#{version}/cocainate_#{version}_linux_arm64.tar.gz"
+		end
 	end
 
 	def install
-		# system "ls"
-		# #{prefix}/bin
-		# #{prefix}/share/man
+		bin.install "cocainate"
+		bash_completion.install "cocainate.bash" => "task"
+		fish_completion.install "cocainate.fish"
+		zsh_completion.install "cocainate.zsh" => "_task"
 	end
 
 	test do
-		assert_equal version, shell_output("#{prefix}/bin/cocainate version").strip
+		system "#{bin}/cocainate", "--help"
 	end
 end
