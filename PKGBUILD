@@ -30,18 +30,10 @@ package() {
 	install -Dm644 "cocainate.8" "${pkgdir}/usr/share/man/man8/cocainate.8"
 
 	# Shell Aautocompletion
-	# install -Dm644 "${_output}/bash" "${pkgdir}/usr/share/bash-completion/completions/yay"
-	# install -Dm644 "${_output}/zsh" "${pkgdir}/usr/share/zsh/site-functions/_yay"
-	# install -Dm644 "${_output}/fish" "${pkgdir}/usr/share/fish/vendor_completions.d/yay.fish"
-	if type bash > /dev/null; then
-		bash -c 'cocainate completion bash > /etc/bash_completion.d/cocainate'
-	fi
-
-	if type fish > /dev/null; then
-		fish -c 'cocainate completion fish > ~/.config/fish/completions/cocainate.fish'
-	fi
-
-	if type zsh > /dev/null; then
-		zsh -c 'cocainate completion zsh > "${fpath[1]}/_cocainate"'
-	fi
+	cocainate completion bash > "${pkgdir}/usr/share/bash-completion/completions/cocainate"
+	chmod 644 "${pkgdir}/usr/share/bash-completion/completions/cocainate"
+	cocainate completion fish > "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
+	chmod 644 "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
+	cocainate completion zsh > "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
+	chmod 644 "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
 }
