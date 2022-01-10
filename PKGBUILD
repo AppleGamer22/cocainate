@@ -7,6 +7,11 @@ arch=('x86_64' 'aarch64')
 url="https://github.com/AppleGamer22/cocainate"
 license=('GPL3')
 depends=('dbus')
+optdepends=(
+	'bash'
+	'fish'
+	'zsh'
+)
 provides=('cocainate')
 conflicts=('cocainate')
 
@@ -19,12 +24,24 @@ source_aarch64=("https://github.com/AppleGamer22/cocainate/releases/download/${p
 # sha256sums_armv7h=('43b6f2c525f07335f85f90b2925c14d9f720992a2f7291d0d07911d89f16796b')
 
 package() {
-	_output="${srcdir}/${pkgname}_${pkgver}_${CARCH}"
-	install -Dm755 "${_output}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
-	# install -Dm644 "${_output}/yay.8" "${pkgdir}/usr/share/man/man8/yay.8"
+	# Binary
+	install -Dm755 "cocainate" "${pkgdir}/usr/bin/cocainate"
+	# Manual Page
+	install -Dm644 "cocainate.8" "${pkgdir}/usr/share/man/man8/cocainate.8"
 
-	# Shell autocompletion script
+	# Shell Aautocompletion
 	# install -Dm644 "${_output}/bash" "${pkgdir}/usr/share/bash-completion/completions/yay"
 	# install -Dm644 "${_output}/zsh" "${pkgdir}/usr/share/zsh/site-functions/_yay"
 	# install -Dm644 "${_output}/fish" "${pkgdir}/usr/share/fish/vendor_completions.d/yay.fish"
+	if type bash > /dev/null; then
+		bash -c 'cocainate completion bash > /etc/bash_completion.d/cocainate'
+	fi
+
+	if type fish > /dev/null; then
+		fish -c 'cocainate completion fish > ~/.config/fish/completions/cocainate.fish'
+	fi
+
+	if type zsh > /dev/null; then
+		zsh -c 'cocainate completion zsh > "${fpath[1]}/_cocainate"'
+	fi
 }
