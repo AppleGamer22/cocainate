@@ -35,9 +35,10 @@ class Cocainate < Formula
 
 	def install
 		bin.install "cocainate"
-		bash_completion.install "cocainate.bash" => "task"
+		man1.install "cocainate.1"
+		bash_completion.install "cocainate.bash" => "cocainate"
 		fish_completion.install "cocainate.fish"
-		zsh_completion.install "cocainate.zsh" => "_task"
+		zsh_completion.install "cocainate.zsh" => "_cocainate"
 	end
 
 	test do

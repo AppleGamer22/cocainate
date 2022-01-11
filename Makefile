@@ -32,7 +32,7 @@ define package_bins
 			short_file_name=cocainate.exe; \
 		else \
 			mv $$file cocainate; \
-			tar -czf $$file.tar.gz cocainate cocainate.bash cocainate.fish cocainate.zsh cocainate.8; \
+			tar -czf $$file.tar.gz cocainate cocainate.bash cocainate.fish cocainate.zsh cocainate.1; \
 			short_file_name=cocainate; \
 		fi; \
 		rm $$short_file_name; \

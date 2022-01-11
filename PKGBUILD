@@ -26,7 +26,7 @@ package() {
 	# Binary
 	install -Dm755 cocainate "${pkgdir}/usr/bin/cocainate"
 	# Manual Page
-	install -Dm644 cocainate.8 "${pkgdir}/usr/share/man/man8/cocainate.8"
+	install -Dm644 cocainate.1 "${pkgdir}/usr/share/man/man1/cocainate.1"
 
 	# Shell Aautocompletion
 	install -Dm644 cocainate.bash "${pkgdir}/usr/share/bash-completion/completions/cocainate"
