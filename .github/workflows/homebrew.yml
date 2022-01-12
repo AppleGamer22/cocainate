@@ -1,4 +1,4 @@
-name: Publish to Homebrew
+name: Publish to Homebrew Tap
 on:
   workflow_run:
     workflows: ["Release to GitHub"]
@@ -10,6 +10,13 @@ jobs:
     steps:
       - name: Pull Source Code
         uses: actions/checkout@v2.3.4
-      - name: Get version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
+      # - name: Get version
+      #   id: get_version
+      #   run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
+      - name: Publish Homebrew Tap
+        uses: garden-io/update-homebrew-action@v1
+        with:
+          packageName: cocainate
+          templatePath: cocainate.rb
+          tapRepo: AppleGamer22/homebrew-cocainate
+          authToken: ${{secrets.GITHUB_TOKEN}}
