@@ -1,8 +1,39 @@
 # `cocainate`
-## Why The Name?
+## Why This Name?
 The program's functionality and name are inspired by [macOS's `caffeinate`](https://github.com/apple-oss-distributions/PowerManagement/blob/PowerManagement-1132.141.1/caffeinate) utility that prevents the system from entering sleep mode.
 
 This name is simply a stupid ~~pun~~, therefore **I do not condone and do not promote drug use**, for more information: [Wikipedia](https://en.wikipedia.org/wiki/Cocaine_(song)).
+
+## Installation
+### Arch Linux Distributions
+* [`yay`](https://github.com/Jguer/yay):
+```bash
+yay -S cocainate-bin
+```
+* [`paru`](https://github.com/morganamilo/paru):
+```bash
+paru -S cocainate-bin
+```
+### macOS
+* [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
+	1. Add tap
+	```bash
+	brew tap AppleGamer22/cocainate
+	```
+	2. Install:
+	```bash
+	brew install cocainate
+	```
+### Windows (working progress)
+* [`winget`](https://github.com/microsoft/winget-cli):
+```bash
+winget install AppleGamer22.cocainate
+```
+### Other
+* `go`:
+```
+go install github.com/AppleGamer22/cocainate
+```
 
 ## Functionality
 ### Global `-d`/`--duration` Flag
