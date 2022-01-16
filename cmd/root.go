@@ -19,7 +19,10 @@ var RootCommand = &cobra.Command{
 			PID:      pid,
 			Duration: duration,
 		}
-		return session.Start()
+		if err := session.Start(); err != nil {
+			return err
+		}
+		return session.Wait()
 	},
 }
 

@@ -47,3 +47,7 @@ func (session *Session) Start() error {
 	err = <-exits
 	return err
 }
+
+func (session *Session) Wait(cookie uint32) error {
+
+}
