@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/signal"
@@ -30,11 +31,16 @@ func (session *Session) Start() error {
 		return err
 	}
 
+	session.active = true
 	return nil
 }
 
 // Wait can be called only after Start has been called successfully
 func (session *Session) Wait() error {
+	if !session.active {
+		return errors.New("Wait can be called only after Start has been called successfully")
+	}
+
 	exit := make(chan bool, 1)
 	if session.Duration > 0 {
 		go func() {

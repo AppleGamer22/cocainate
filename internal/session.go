@@ -9,6 +9,7 @@ import (
 type Session struct {
 	PID      int
 	Duration time.Duration
+	active   bool
 }
 
 var signals chan os.Signal
