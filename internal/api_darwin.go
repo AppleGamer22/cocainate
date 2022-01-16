@@ -1,12 +1,15 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"os/signal"
 	"syscall"
 )
+
+var caffeinate *exec.Cmd
 
 func (session *Session) Start() error {
 	var args []string
@@ -23,10 +26,14 @@ func (session *Session) Start() error {
 		args = append(args, pid)
 	}
 
-	caffeinate := exec.Command("caffeinate", args...)
-	err := caffeinate.Start()
-	if err != nil {
-		return err
+	caffeinate = exec.Command("caffeinate", args...)
+	return caffeinate.Start()
+}
+
+// Wait can be called only after Start has been called successfully
+func (session *Session) Wait() error {
+	if caffeinate == nil {
+		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
 	exits := make(chan error, 1)
@@ -37,17 +44,14 @@ func (session *Session) Start() error {
 		}()
 	}
 
-	signals := make(chan os.Signal, 1)
+	signals = make(chan os.Signal, 1)
 	go func() {
 		signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-signals
+		fmt.Println()
 		err := caffeinate.Process.Kill()
 		exits <- err
 	}()
-	err = <-exits
+	err := <-exits
 	return err
-}
-
-func (session *Session) Wait(cookie uint32) error {
-
 }

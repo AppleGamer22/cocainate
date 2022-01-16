@@ -41,6 +41,7 @@ func (session *Session) Start() error {
 	go func() {
 		signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-signals
+		fmt.Println()
 		exit <- true
 	}()
 
