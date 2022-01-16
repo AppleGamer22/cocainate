@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -29,6 +30,11 @@ func (session *Session) Start() error {
 		return err
 	}
 
+	return nil
+}
+
+// Wait can be called only after Start has been called successfully
+func (session *Session) Wait() error {
 	exit := make(chan bool, 1)
 	if session.Duration > 0 {
 		go func() {
@@ -37,7 +43,7 @@ func (session *Session) Start() error {
 		}()
 	}
 
-	signals := make(chan os.Signal, 1)
+	signals = make(chan os.Signal, 1)
 	go func() {
 		signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-signals
@@ -46,7 +52,9 @@ func (session *Session) Start() error {
 	}()
 
 	<-exit
-	r1, _, err = setThreadExecStateProc.Call(uintptr(esContinuous))
+	kernel32 := syscall.NewLazyDLL("kernel32.dll")
+	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
+	r1, _, err := setThreadExecStateProc.Call(uintptr(esContinuous))
 	if r1 == 0 {
 		return err
 	}
