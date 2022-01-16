@@ -10,6 +10,7 @@ class Cocainate < Formula
 	depends_on "fish" => :optional
 	depends_on "zsh" => :optional
 	depends_on "go" => :build
+	depends_on "git" => :build
 
 	on_macos do
 		if Hardware::CPU.intel?

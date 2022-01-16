@@ -7,12 +7,17 @@ arch=('x86_64' 'aarch64')
 url="https://github.com/AppleGamer22/cocainate"
 license=('GPL3')
 depends=('dbus')
-makedepends=('go')
+
+makedepends=(
+	'go'
+	'git'
+)
 optdepends=(
 	'bash'
 	'fish'
 	'zsh'
 )
+
 provides=('cocainate')
 conflicts=('cocainate')
 
