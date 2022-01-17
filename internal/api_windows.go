@@ -49,10 +49,12 @@ func (session *Session) Wait() error {
 		}()
 	}
 
-	signals = make(chan os.Signal, 1)
+	if session.Signals == nil {
+		session.Signals = make(chan os.Signal, 1)
+	}
 	go func() {
-		signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
-		<-signals
+		signal.Notify(session.Signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
+		<-session.Signals
 		fmt.Println()
 		exit <- true
 	}()

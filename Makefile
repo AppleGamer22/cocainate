@@ -7,7 +7,7 @@ build: linux mac windows
 
 test:
 	@echo "Testing $(VERSION) internal"
-	go clean -testcache && go test -v -cover ./internal/*
+	go clean -testcache && go test -v -cover ./internal/
 	@echo "Testing $(VERSION) cmd"
 	go clean -testcache && go test -v -cover ./cmd/*
 
