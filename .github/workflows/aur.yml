@@ -2,8 +2,7 @@ name: Publish to Arch User Repository
 on:
   workflow_run:
     workflows: ["Release to GitHub"]
-    types:
-      - completed
+    types: [completed]
 jobs:
   aur_publish:
     runs-on: ubuntu-latest

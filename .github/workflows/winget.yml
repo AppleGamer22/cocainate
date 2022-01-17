@@ -2,8 +2,7 @@ name: Publish to winget
 on:
   workflow_run:
     workflows: ["Release to GitHub"]
-    types:
-      - completed
+    types: [completed]
 jobs:
   winget_publish:
     runs-on: windows-latest

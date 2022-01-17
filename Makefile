@@ -7,9 +7,9 @@ build: linux mac windows
 
 test:
 	@echo "Testing $(VERSION) internal"
-	go clean -testcache && go test -v -cover ./internal/
+	go clean -testcache && go test -v -cover ./internal
 	@echo "Testing $(VERSION) cmd"
-	go clean -testcache && go test -v -cover ./cmd/*
+	go clean -testcache && go test -v -cover ./cmd
 
 linux:
 	GOOS=linux GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_linux_amd64
