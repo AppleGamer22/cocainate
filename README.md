@@ -67,6 +67,10 @@ This is an optional flag that accepts a process ID (PID). If a valid PID is prov
 ## Dependencies
 ### Linux
 * [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/)
+* One of the following desktop environments:
+	* [KDE](https://kde.org) 4 or later
+	* [GNOME](https://gnome.org) 3.10 or later
+	<!-- * [MATE](https://mate-desktop.org) -->
 ### macOS
 * [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) (optional)
 ### Windows
