@@ -52,8 +52,8 @@ This is an optional flag that accepts a duration string (see [Go's `time.ParseDu
 * 1 hour, 10 minutes and 10 seconds: `-d 1h10m10s`
 * 1 microsecond: `-d 1us`
 
-### Global `--pid` Flag
-This is an optional flag that accepts a process ID (PID). If a valid PID is provided, the program will wait until that process is terminated.
+<!-- ### Global `--pid` Flag
+This is an optional flag that accepts a process ID (PID). If a valid PID is provided, the program will wait until that process is terminated. -->
 
 ### `version` Sub-command
 #### `-v`/`--verbose` Flag
