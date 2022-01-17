@@ -3,6 +3,7 @@ on:
   pull_request:
     types:
       - opened
+      - closed
       - reopened
   workflow_dispatch:
     inputs: {}
@@ -18,11 +19,14 @@ jobs:
     steps:
       - name: Pull Source Code
         uses: actions/checkout@v2.3.4
+      - name: Install Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update && sudo apt-get upgrade -y
+          sudo apt-get install -y lightdm dbus-x11 xdg-utils
       - name: Set-up Go
         uses: actions/setup-go@v2.1.3
         with:
           go-version: "1.17.5"
-      - name: Test internal
-        run: go test -v -cover $(pwd)/internal
-      - name: Test cmd
-        run: go test -v -cover $(pwd)/cmd
+      - name: Test
+        run: make test
