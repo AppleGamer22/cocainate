@@ -18,7 +18,7 @@ const (
 	uninhibit   = "org.freedesktop.ScreenSaver.UnInhibit"
 )
 
-var cookie uint
+var cookie uint32
 
 // https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html
 //
