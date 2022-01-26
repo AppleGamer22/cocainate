@@ -10,8 +10,9 @@ Vagrant.configure("2") do |config|
 	config.vm.hostname = "ubuntu"
 	config.vm.synced_folder ".", "/home/vagrant/Documents/cocainate", create: true
 	config.vm.provision "shell", inline: <<-SCRIPT
-		sudo apt update && sudo apt upgrade -y
-		sudo apt install -y ubuntu-desktop golang
+		# sudo apt update && sudo apt upgrade -y
+		# sudo apt install -y ubuntu-desktop golang
+		sudo apt install -y golang dbus dbus-x11
 		sudo systemctl start gdm3
 	SCRIPT
 end
