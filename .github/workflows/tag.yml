@@ -3,7 +3,7 @@ on:
   push:
     tags: ['v*']
 jobs:
-  github_release:
+  publish_docs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Source Code
@@ -17,7 +17,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          version=GITHUB_REF##*/
+          version=${GITHUB_REF##*/}
           echo ::set-output name=VERSION::${version:1}
       - name: Publish Documentation
         run: GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/AppleGamer22/cocainate@v${{steps.get_version.outputs.VERSION}}
