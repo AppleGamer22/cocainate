@@ -17,15 +17,10 @@ paru -S cocainate-bin
 
 ### macOS
 * [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
-	1. Add tap
-	```bash
-	brew tap AppleGamer22/cocainate
-	```
-
-	2. Install:
-	```bash
-	brew install cocainate
-	```
+```bash
+brew tap AppleGamer22/cocainate
+brew install cocainate
+```
 
 ### Windows (working progress)
 * [`winget`](https://github.com/microsoft/winget-cli):
