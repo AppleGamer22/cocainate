@@ -16,9 +16,7 @@ jobs:
         run: make package
       - name: Get version
         id: get_version
-        run: |
-          version=${GITHUB_REF##*/}
-          echo ::set-output name=VERSION::${version:1}
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/v}
       - name: Upload linux/amd64 Release Asset
         uses: actions/upload-release-asset@v1
         env:
