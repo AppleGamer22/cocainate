@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// Test for session duration
 func TestDuration(t *testing.T) {
 	session := Session{
 		Duration: time.Nanosecond,
@@ -21,6 +22,7 @@ func TestDuration(t *testing.T) {
 	require.NoError(t, err)
 }
 
+// Test for session interrupt
 func TestInterrupt(t *testing.T) {
 	session := Session{}
 	err := session.Start()

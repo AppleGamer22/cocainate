@@ -13,7 +13,11 @@ type Session struct {
 	active   bool
 }
 
-// Stop terminates the current session. Can be called only when `session.Wait` is running in the background.
+/*
+Stop terminates the current session.
+
+Can be called only when Wait is running in the background.
+*/
 func (session *Session) Stop() error {
 	if session.Signals != nil {
 		session.Signals <- os.Interrupt

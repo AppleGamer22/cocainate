@@ -12,6 +12,11 @@ import (
 
 var caffeinate *exec.Cmd
 
+/*
+Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/tree/PowerManagement-1132.141.1/caffeinate) session.
+
+A non-nil error is returned if the session failed to start.
+*/
 func (session *Session) Start() error {
 	var args []string
 
@@ -31,7 +36,13 @@ func (session *Session) Start() error {
 	return caffeinate.Start()
 }
 
-// Wait can be called only after Start has been called successfully
+/*
+Wait can be called only after Start has been called successfully.
+
+Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
+
+A non-nil error is returned if the caffeinate session failed to stop.
+*/
 func (session *Session) Wait() error {
 	if caffeinate == nil {
 		return errors.New("Wait can be called only after Start has been called successfully")

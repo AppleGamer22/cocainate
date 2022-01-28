@@ -20,9 +20,11 @@ const (
 
 var cookie uint32
 
-// https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html
-//
-// https://youtu.be/-bEzHG2u8XA?t=721
+/*
+Starts the session (according to https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html) with a call to the D-BUS screensaver inhibitor.
+
+A non-nil error is returned if the D-BUS session connection fails, if the inhabitation call fails or if the cookie recovery fails.
+*/
 func (session *Session) Start() error {
 	connection, err := dbus.SessionBus()
 	if err != nil {
@@ -37,7 +39,6 @@ func (session *Session) Start() error {
 		return call.Err
 	}
 
-	// var cookie uint32
 	if err := call.Store(&cookie); err != nil {
 		return err
 	}
@@ -45,7 +46,13 @@ func (session *Session) Start() error {
 	return nil
 }
 
-// Wait can be called only after Start has been called successfully
+/*
+Wait can be called only after Start has been called successfully.
+
+Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
+
+A non-nil error is returned if the D-BUS session connection fails, or if the uninhabitation call fails.
+*/
 func (session *Session) Wait() error {
 	if cookie == 0 {
 		return errors.New("Wait can be called only after Start has been called successfully")

@@ -14,15 +14,11 @@ const (
 	esSystemRequired = 0x00000001
 )
 
-// Start
-//
-// https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-powersetrequest
-//
-// https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate
-//
-// https://stackoverflow.com/questions/45436158/how-to-to-stop-a-machine-from-sleeping-hibernating-for-execution-period
-//
-// https://github.com/iamacarpet/go-win64api/blob/master/process.go#L143-L150
+/*
+Starts a SetThreadExecutionState session (https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate).
+
+A non-nil error is returned if the session failed to start.
+*/
 func (session *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
@@ -35,7 +31,13 @@ func (session *Session) Start() error {
 	return nil
 }
 
-// Wait can be called only after Start has been called successfully
+/*
+Wait can be called only after Start has been called successfully.
+
+Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
+
+A non-nil error is returned if the SetThreadExecutionState session failed to stop.
+*/
 func (session *Session) Wait() error {
 	if !session.active {
 		return errors.New("Wait can be called only after Start has been called successfully")
@@ -66,5 +68,7 @@ func (session *Session) Wait() error {
 	if r1 == 0 {
 		return err
 	}
+
+	session.active = false
 	return nil
 }
