@@ -18,8 +18,6 @@ const (
 	uninhibit   = "org.freedesktop.ScreenSaver.UnInhibit"
 )
 
-var cookie uint32
-
 /*
 Starts the session (according to https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html) with a call to the D-BUS screensaver inhibitor.
 
@@ -39,10 +37,11 @@ func (session *Session) Start() error {
 		return call.Err
 	}
 
-	if err := call.Store(&cookie); err != nil {
+	if err := call.Store(&session.cookie); err != nil {
 		return err
 	}
 
+	session.active = true
 	return nil
 }
 
@@ -54,7 +53,7 @@ Wait will block further execution until the user send an interrupt signal, or un
 A non-nil error is returned if the D-BUS session connection fails, or if the uninhabitation call fails.
 */
 func (session *Session) Wait() error {
-	if cookie == 0 {
+	if !session.active || session.cookie == 0 {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
@@ -84,5 +83,12 @@ func (session *Session) Wait() error {
 	defer connection.Close()
 
 	object := connection.Object(screensaver, path)
-	return object.Call(uninhibit, 0, cookie).Err
+	err = object.Call(uninhibit, 0, session.cookie).Err
+	if err != nil {
+		return err
+	}
+
+	session.active = false
+	session.cookie = 0
+	return nil
 }

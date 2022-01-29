@@ -3,14 +3,17 @@ package internal
 import (
 	"errors"
 	"os"
+	"os/exec"
 	"time"
 )
 
 type Session struct {
-	PID      int
-	Duration time.Duration
-	Signals  chan os.Signal
-	active   bool
+	PID        int
+	Duration   time.Duration
+	Signals    chan os.Signal
+	cookie     uint32
+	caffeinate *exec.Cmd
+	active     bool
 }
 
 /*

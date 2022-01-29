@@ -10,8 +10,6 @@ import (
 	"time"
 )
 
-var caffeinate *exec.Cmd
-
 /*
 Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/tree/PowerManagement-1132.141.1/caffeinate) session.
 
@@ -32,8 +30,14 @@ func (session *Session) Start() error {
 	// 	args = append(args, pid)
 	// }
 
-	caffeinate = exec.Command("caffeinate", args...)
-	return caffeinate.Start()
+	session.caffeinate = exec.Command("caffeinate", args...)
+	err := session.caffeinate.Start()
+	if err != nil {
+		return nil
+	}
+
+	session.active = true
+	return nil
 }
 
 /*
@@ -44,7 +48,7 @@ Wait will block further execution until the user send an interrupt signal, or un
 A non-nil error is returned if the caffeinate session failed to stop.
 */
 func (session *Session) Wait() error {
-	if caffeinate == nil {
+	if !session.active || session.caffeinate == nil {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
@@ -52,7 +56,7 @@ func (session *Session) Wait() error {
 	if session.Duration > 0 {
 		go func() {
 			time.Sleep(session.Duration)
-			err := caffeinate.Process.Kill()
+			err := session.caffeinate.Process.Kill()
 			exits <- err
 		}()
 	}
@@ -64,9 +68,15 @@ func (session *Session) Wait() error {
 		signal.Notify(session.Signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-session.Signals
 		fmt.Println()
-		err := caffeinate.Process.Kill()
+		err := session.caffeinate.Process.Kill()
 		exits <- err
 	}()
 	err := <-exits
-	return err
+	if err != nil {
+		return err
+	}
+
+	session.active = false
+	session.caffeinate = nil
+	return nil
 }
