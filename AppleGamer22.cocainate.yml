@@ -18,6 +18,10 @@ Description: Cross-platform caffeinate alternative. Pre-compiled.
 ShortDescription: Cross-platform caffeinate alternative.
 Installers:
   - Architecture: x64
+    Platform:
+      - Windows.Desktop
+    Commands:
+      - cocainate
     InstallerType: zip
     InstallerUrl: https://github.com/AppleGamer22/cocainate/releases/download/1.0.0/cocainate_1.0.0_linux_amd64.tar.gz
     InstallerSha256: 092aa89b1881e058d31b1a8d88f31bb298b5810afbba25c5cb341cfa4904d843
