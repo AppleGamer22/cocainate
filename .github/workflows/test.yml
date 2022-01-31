@@ -23,8 +23,8 @@ jobs:
       - name: Install Linux-only Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
-          # sudo apt update && sudo apt upgrade -y
-          sudo apt install -y dbus dbus-x11
+          # sudo apt install -y ubuntu-desktop-minimal
+          # sudo systemctl isolate graphical
           # sudo systemctl start gdm3
       - name: Set-up Go
         uses: actions/setup-go@v2.1.3

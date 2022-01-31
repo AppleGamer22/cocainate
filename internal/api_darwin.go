@@ -30,6 +30,7 @@ func (session *Session) Start() error {
 	// 	args = append(args, pid)
 	// }
 
+	session.Lock()
 	session.caffeinate = exec.Command("caffeinate", args...)
 	err := session.caffeinate.Start()
 	if err != nil {
@@ -37,6 +38,7 @@ func (session *Session) Start() error {
 	}
 
 	session.active = true
+	session.Unlock()
 	return nil
 }
 
@@ -76,7 +78,9 @@ func (session *Session) Wait() error {
 		return err
 	}
 
+	session.Lock()
 	session.active = false
 	session.caffeinate = nil
+	session.Unlock()
 	return nil
 }

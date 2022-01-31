@@ -27,7 +27,9 @@ func (session *Session) Start() error {
 		return err
 	}
 
+	session.Lock()
 	session.active = true
+	session.Unlock()
 	return nil
 }
 
@@ -69,6 +71,8 @@ func (session *Session) Wait() error {
 		return err
 	}
 
+	session.Lock()
 	session.active = false
+	session.Unlock()
 	return nil
 }

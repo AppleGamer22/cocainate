@@ -36,12 +36,13 @@ func (session *Session) Start() error {
 	if call.Err != nil {
 		return call.Err
 	}
-
+	session.Lock()
 	if err := call.Store(&session.cookie); err != nil {
 		return err
 	}
 
 	session.active = true
+	session.Unlock()
 	return nil
 }
 
@@ -50,7 +51,7 @@ Wait can be called only after Start has been called successfully.
 
 Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
 
-A non-nil error is returned if the D-BUS session connection fails, or if the uninhabitation call fails.
+A non-nil error is returned if the D-BUS session connection fails, or if the un-inhabitation call fails.
 */
 func (session *Session) Wait() error {
 	if !session.active || session.cookie == 0 {
@@ -82,6 +83,7 @@ func (session *Session) Wait() error {
 	}
 	defer connection.Close()
 
+	session.Lock()
 	object := connection.Object(screensaver, path)
 	err = object.Call(uninhibit, 0, session.cookie).Err
 	if err != nil {
@@ -90,5 +92,6 @@ func (session *Session) Wait() error {
 
 	session.active = false
 	session.cookie = 0
+	session.Unlock()
 	return nil
 }

@@ -4,10 +4,12 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"sync"
 	"time"
 )
 
 type Session struct {
+	sync.Mutex
 	PID        int
 	Duration   time.Duration
 	Signals    chan os.Signal
