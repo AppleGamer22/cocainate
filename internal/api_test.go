@@ -1,9 +1,11 @@
-package internal
+package internal_test
 
 import (
-	"os"
+	"sync"
 	"testing"
 	"time"
+
+	"github.com/AppleGamer22/cocainate/internal"
 
 	// "github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -11,9 +13,7 @@ import (
 
 // Test for session duration
 func TestDuration(t *testing.T) {
-	session := Session{
-		Duration: time.Nanosecond,
-	}
+	session := internal.NewSession(0, time.Nanosecond)
 
 	err := session.Start()
 	require.NoError(t, err)
@@ -22,15 +22,42 @@ func TestDuration(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// Test for session interrupt
+// Test for session interrupt signal
 func TestInterrupt(t *testing.T) {
-	session := Session{}
+	session := internal.NewSession(0, 0)
 	err := session.Start()
 	require.NoError(t, err)
 
-	session.Signals = make(chan os.Signal, 1)
-	session.Signals <- os.Interrupt
+	err = session.Stop()
+	require.NoError(t, err)
 
 	err = session.Wait()
 	require.NoError(t, err)
+}
+
+// Test for session programtic stop
+func TestStop(t *testing.T) {
+	session := internal.NewSession(0, 0)
+	err := session.Start()
+	require.NoError(t, err)
+
+	errs := make(chan error, 2)
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		errs <- session.Wait()
+		wg.Done()
+	}()
+
+	go func() {
+		errs <- session.Stop()
+		wg.Done()
+	}()
+
+	wg.Wait()
+	for i := 0; i < cap(errs); i++ {
+		err := <-errs
+		require.NoError(t, err)
+	}
 }

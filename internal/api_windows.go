@@ -53,12 +53,14 @@ func (session *Session) Wait() error {
 		}()
 	}
 
-	if session.Signals == nil {
-		session.Signals = make(chan os.Signal, 1)
+	if session.signals == nil {
+		session.Lock()
+		session.signals = make(chan os.Signal, 1)
+		session.Unlock()
 	}
 	go func() {
-		signal.Notify(session.Signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
-		<-session.Signals
+		signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
+		<-session.signals
 		fmt.Print("\b\b")
 		exit <- true
 	}()

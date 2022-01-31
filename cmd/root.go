@@ -15,10 +15,8 @@ var RootCommand = &cobra.Command{
 	Short: "keep screen awake",
 	Long:  "keep screen awake",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		session := internal.Session{
-			PID:      pid,
-			Duration: duration,
-		}
+		session := internal.NewSession(pid, duration)
+
 		if err := session.Start(); err != nil {
 			return err
 		}
