@@ -69,7 +69,7 @@ func (session *Session) Wait() error {
 	go func() {
 		signal.Notify(session.Signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-session.Signals
-		fmt.Println()
+		fmt.Print("\b\b")
 		err := session.caffeinate.Process.Kill()
 		exits <- err
 	}()
