@@ -1,6 +1,6 @@
 # `cocainate`
 ## Why This Name?
-The program's functionality and name are inspired by [macOS's `caffeinate`](https://github.com/apple-oss-distributions/PowerManagement/blob/PowerManagement-1132.141.1/caffeinate) utility that prevents the system from entering sleep mode.
+The program's functionality and name are inspired by [macOS's `caffeinate`](https://github.com/apple-oss-distributions/PowerManagement/blob/main/caffeinate) utility that prevents the system from entering sleep mode.
 
 This name is simply a stupid ~~pun~~, therefore **I do not condone and do not promote drug use**, for more information: [Wikipedia](https://en.wikipedia.org/wiki/Cocaine_(song)).
 

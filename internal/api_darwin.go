@@ -11,7 +11,7 @@ import (
 )
 
 /*
-Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/tree/PowerManagement-1132.141.1/caffeinate) session.
+Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/tree/main/caffeinate) session.
 
 A non-nil error is returned if the session failed to start.
 */
