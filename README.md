@@ -1,4 +1,7 @@
 # `cocainate`
+## Description
+`cocainate` is a cross-platform CLI utility for keeping the screen awake until stopped, or for a specified duration.
+
 ## Why This Name?
 The program's functionality and name are inspired by [macOS's `caffeinate`](https://github.com/apple-oss-distributions/PowerManagement/blob/main/caffeinate) utility that prevents the system from entering sleep mode.
 
@@ -68,7 +71,8 @@ This is an optional flag that accepts a process ID (PID). If a valid PID is prov
 * One of the following desktop environments:
 	* [KDE](https://kde.org) 4 or later
 	* [GNOME](https://gnome.org) 3.10 or later
+	* Any other desktop environment that implements [`org.freedesktop.ScreenSaver`](https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html)
 	<!-- * [MATE](https://mate-desktop.org) -->
-### macOS
+<!-- ### macOS
 * [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) (optional)
-### Windows
+### Windows -->
