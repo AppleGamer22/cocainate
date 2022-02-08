@@ -33,6 +33,11 @@ func (session *Session) Start() error {
 	return nil
 }
 
+/*
+Stop kills an already-started session while Wait is not running in the background.
+
+This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
+*/
 func (session *Session) Stop() error {
 	if !session.active {
 		return errors.New("Stop can be called only after Start has been called successfully")
