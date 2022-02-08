@@ -14,7 +14,6 @@ import (
 // Test for session duration
 func TestDuration(t *testing.T) {
 	session := internal.NewSession(0, time.Nanosecond)
-
 	err := session.Start()
 	require.NoError(t, err)
 
@@ -28,15 +27,15 @@ func TestInterrupt(t *testing.T) {
 	err := session.Start()
 	require.NoError(t, err)
 
-	err = session.Stop()
+	err = session.Kill()
 	require.NoError(t, err)
 
 	err = session.Wait()
 	require.NoError(t, err)
 }
 
-// Test for session programtic stop
-func TestStop(t *testing.T) {
+// Test for session programtic stop while Wait is running
+func TestKill(t *testing.T) {
 	session := internal.NewSession(0, 0)
 	err := session.Start()
 	require.NoError(t, err)
@@ -51,7 +50,7 @@ func TestStop(t *testing.T) {
 	}()
 
 	go func() {
-		errs <- session.Stop()
+		errs <- session.Kill()
 		wg.Done()
 	}()
 
@@ -60,4 +59,14 @@ func TestStop(t *testing.T) {
 		err := <-errs
 		require.NoError(t, err)
 	}
+}
+
+// Test for session programtic stop while Wait is not running
+func TestStop(t *testing.T) {
+	session := internal.NewSession(0, 0)
+	err := session.Start()
+	require.NoError(t, err)
+
+	err = session.Stop()
+	require.NoError(t, err)
 }

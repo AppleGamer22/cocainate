@@ -43,6 +43,27 @@ func (session *Session) Start() error {
 }
 
 /*
+Stop kills an already-started session while Wait is not running in the background.
+
+This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
+*/
+func (session *Session) Stop() error {
+	if !session.active || session.caffeinate == nil {
+		return errors.New("Wait can be called only after Start has been called successfully")
+	}
+
+	if err := session.caffeinate.Process.Kill(); err != nil {
+		return err
+	}
+
+	session.Lock()
+	session.active = false
+	session.caffeinate = nil
+	session.Unlock()
+	return nil
+}
+
+/*
 Wait can be called only after Start has been called successfully.
 
 Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
@@ -54,12 +75,11 @@ func (session *Session) Wait() error {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
-	exits := make(chan error, 1)
+	exit := make(chan bool, 1)
 	if session.Duration > 0 {
 		go func() {
 			time.Sleep(session.Duration)
-			err := session.caffeinate.Process.Kill()
-			exits <- err
+			exit <- true
 		}()
 	}
 
@@ -68,21 +88,15 @@ func (session *Session) Wait() error {
 		session.signals = make(chan os.Signal, 1)
 		session.Unlock()
 	}
+
 	go func() {
 		signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-session.signals
 		fmt.Print("\b\b")
-		err := session.caffeinate.Process.Kill()
-		exits <- err
-	}()
-	err := <-exits
-	if err != nil {
-		return err
-	}
 
-	session.Lock()
-	session.active = false
-	session.caffeinate = nil
-	session.Unlock()
-	return nil
+		exit <- true
+	}()
+
+	<-exit
+	return session.Stop()
 }

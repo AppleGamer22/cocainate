@@ -33,6 +33,24 @@ func (session *Session) Start() error {
 	return nil
 }
 
+func (session *Session) Stop() error {
+	if !session.active {
+		return errors.New("Stop can be called only after Start has been called successfully")
+	}
+
+	kernel32 := syscall.NewLazyDLL("kernel32.dll")
+	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
+	r1, _, err := setThreadExecStateProc.Call(uintptr(esContinuous))
+	if r1 == 0 {
+		return err
+	}
+
+	session.Lock()
+	session.active = false
+	session.Unlock()
+	return nil
+}
+
 /*
 Wait can be called only after Start has been called successfully.
 
@@ -66,15 +84,5 @@ func (session *Session) Wait() error {
 	}()
 
 	<-exit
-	kernel32 := syscall.NewLazyDLL("kernel32.dll")
-	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
-	r1, _, err := setThreadExecStateProc.Call(uintptr(esContinuous))
-	if r1 == 0 {
-		return err
-	}
-
-	session.Lock()
-	session.active = false
-	session.Unlock()
-	return nil
+	return session.Stop()
 }

@@ -46,6 +46,30 @@ func (session *Session) Start() error {
 	return nil
 }
 
+func (session *Session) Stop() error {
+	if !session.active || session.cookie == 0 {
+		return errors.New("Stop can be called only after Start has been called successfully")
+	}
+
+	connection, err := dbus.SessionBus()
+	if err != nil {
+		return err
+	}
+	defer connection.Close()
+
+	session.Lock()
+	object := connection.Object(screensaver, path)
+	err = object.Call(uninhibit, 0, session.cookie).Err
+	if err != nil {
+		return err
+	}
+
+	session.active = false
+	session.cookie = 0
+	session.Unlock()
+	return nil
+}
+
 /*
 Wait can be called only after Start has been called successfully.
 
@@ -71,6 +95,7 @@ func (session *Session) Wait() error {
 		session.signals = make(chan os.Signal, 1)
 		session.Unlock()
 	}
+
 	go func() {
 		signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 		<-session.signals
@@ -79,21 +104,5 @@ func (session *Session) Wait() error {
 	}()
 
 	<-exit
-	connection, err := dbus.SessionBus()
-	if err != nil {
-		return err
-	}
-	defer connection.Close()
-
-	session.Lock()
-	object := connection.Object(screensaver, path)
-	err = object.Call(uninhibit, 0, session.cookie).Err
-	if err != nil {
-		return err
-	}
-
-	session.active = false
-	session.cookie = 0
-	session.Unlock()
-	return nil
+	return session.Stop()
 }

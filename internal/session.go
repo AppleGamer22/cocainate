@@ -27,11 +27,11 @@ func NewSession(pid int, duration time.Duration) Session {
 }
 
 /*
-Stop terminates the current session.
+Kill terminates the current session.
 
 Can be called only when Wait is running in the background.
 */
-func (session *Session) Stop() error {
+func (session *Session) Kill() error {
 	if session.signals == nil {
 		return errors.New("the signal channel has not be initialized, probably because session.Wait is not running in the background")
 	}
