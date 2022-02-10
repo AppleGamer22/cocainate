@@ -72,8 +72,12 @@ Kill terminates the current session.
 Can be called only when Wait is running in the background.
 */
 func (session *Session) Kill() error {
-	if session.signals == nil {
-		return errors.New("the signal channel has not be initialized, probably because session.Wait is not running in the background")
+	linuxError := runtime.GOOS == "linux" && (!session.active || session.cookie == 0)
+	macError := runtime.GOOS == "darwin" && (!session.active || session.caffeinate == nil)
+	windowsError := runtime.GOOS == "windows" && !session.active
+
+	if session.signals == nil || linuxError || macError || windowsError {
+		return errors.New("Start has not been called successfully or Wait is not running in the background")
 	}
 
 	session.Lock()
