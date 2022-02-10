@@ -38,10 +38,10 @@ Wait will block further execution until the user send an interrupt signal, or un
 A non-nil error is returned if the D-BUS session connection fails, or if the un-inhabitation call fails.
 */
 func (session *Session) Wait() error {
-	switch true {
-	case runtime.GOOS == "linux" && (!session.active || session.cookie == 0):
-	case runtime.GOOS == "darwin" && (!session.active || session.caffeinate == nil):
-	case runtime.GOOS == "windows" && !session.active:
+	linuxError := runtime.GOOS == "linux" && (!session.active || session.cookie == 0)
+	macError := runtime.GOOS == "darwin" && (!session.active || session.caffeinate == nil)
+	windowsError := runtime.GOOS == "windows" && !session.active
+	if linuxError || macError || windowsError {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 

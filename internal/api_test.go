@@ -70,3 +70,10 @@ func TestStop(t *testing.T) {
 	err = session.Stop()
 	require.NoError(t, err)
 }
+
+// Test for when Wait is called before Start
+func TestWaitBeforeStart(t *testing.T) {
+	session := internal.NewSession(0, 0)
+	err := session.Wait()
+	require.Error(t, err)
+}
