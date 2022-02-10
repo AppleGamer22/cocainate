@@ -2,11 +2,7 @@ package internal
 
 import (
 	"errors"
-	"fmt"
-	"os"
-	"os/signal"
 	"syscall"
-	"time"
 )
 
 const (
@@ -54,40 +50,4 @@ func (session *Session) Stop() error {
 	session.active = false
 	session.Unlock()
 	return nil
-}
-
-/*
-Wait can be called only after Start has been called successfully.
-
-Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
-
-A non-nil error is returned if the SetThreadExecutionState session failed to stop.
-*/
-func (session *Session) Wait() error {
-	if !session.active {
-		return errors.New("Wait can be called only after Start has been called successfully")
-	}
-
-	exit := make(chan bool, 1)
-	if session.Duration > 0 {
-		go func() {
-			time.Sleep(session.Duration)
-			exit <- true
-		}()
-	}
-
-	if session.signals == nil {
-		session.Lock()
-		session.signals = make(chan os.Signal, 1)
-		session.Unlock()
-	}
-	go func() {
-		signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
-		<-session.signals
-		fmt.Print("\b\b")
-		exit <- true
-	}()
-
-	<-exit
-	return session.Stop()
 }
