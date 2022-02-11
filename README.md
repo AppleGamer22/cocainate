@@ -76,3 +76,35 @@ This is an optional flag that accepts a process ID (PID). If a valid PID is prov
 <!-- ### macOS
 * [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) (optional)
 ### Windows -->
+
+## Common Contributor Routines
+### Testing
+Running the following command will run `go test` on the cmd and internal sub-modules:
+```bash
+make test
+```
+### Building From Source
+Running the following command will run `go build` for:
+* Linux
+	* AMD/Intel 64-bit processors
+	* ARM 64-bit processors
+	* RISC-V 64-bit processors
+* macOS
+	* AMD/Intel 64-bit processors
+	* ARM 64-bit processors
+* Windows
+	* AMD/Intel 64-bit processors
+	* ARM 64-bit processors
+
+```bash
+make build
+```
+### Packaging
+Running the following command will package the program binaries and shell (BASH, ZSH, FISH and PowerShell) completion scripts for:
+* Arch Linux Distributions
+* macOS
+* Windows
+
+```bash
+make package
+```
