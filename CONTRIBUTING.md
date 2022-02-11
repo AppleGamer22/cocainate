@@ -1,4 +1,4 @@
-# Contributing to `scr-web`
+# Contributing to `cocainate`
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 * Reporting a bug
 * Discussing the current state of the code
@@ -6,15 +6,15 @@ We love your input! We want to make contributing to this project as easy and tra
 * Proposing new features
 * Becoming a maintainer
 
-## [Questions/Problems](https://github.com/AppleGamer22/scr-web/discussions)
+## [Questions/Problems](https://github.com/AppleGamer22/cocainate/discussions)
 We use GitHub Discussions to answer your questions that might not require an issue ad a pull request.
 
 Available discussion categories:
-* [General](https://github.com/AppleGamer22/scr-web/discussions/categories/general)
-* [Ideas](https://github.com/AppleGamer22/scr-web/discussions/categories/ideas)
+* [General](https://github.com/AppleGamer22/cocainate/discussions/categories/general)
+* [Ideas](https://github.com/AppleGamer22/cocainate/discussions/categories/ideas)
   * Discussion categories changes should be suggested here.
-* [Q&A](https://github.com/AppleGamer22/scr-web/discussions/categories/q-a)
-* [Show & Tell](https://github.com/AppleGamer22/scr-web/discussions/categories/show-tell)
+* [Q&A](https://github.com/AppleGamer22/cocainate/discussions/categories/q-a)
+* [Show & Tell](https://github.com/AppleGamer22/cocainate/discussions/categories/show-tell)
 
 ## [Submissions](https://guides.github.com/introduction/flow/index.html)
 Pull requests are the best way to propose changes to the codebase (we use Github Flow). We actively welcome your pull requests:
@@ -29,11 +29,11 @@ Pull requests are the best way to propose changes to the codebase (we use Github
 1. Fork the repo and create your branch from `master`/`main`.
 ```bash
 # Clone your fork of the repo into the current directory
-git clone https://github.com/AppleGamer22/scr-web
+git clone https://github.com/AppleGamer22/cocainate
 # Navigate to the newly cloned directory
-cd scr-web
+cd cocainate
 # Assign the original repo to a remote called "GitHub"
-git remote add GitHub https://github.com/AppleGamer22/scr-web
+git remote add GitHub https://github.com/AppleGamer22/cocainate
 # Create a ew branch from HEAD
 git branch <your branch>
 ```
@@ -69,7 +69,7 @@ gh pr ready [<number> | <url> | <branch>] [flags]
 gh pr close [<number> | <url> | <branch>] [flags]
 ```
 
-## [Bug Reports/Feature Requests](https://github.com/AppleGamer22/scr-web/issues)
+## [Bug Reports/Feature Requests](https://github.com/AppleGamer22/cocainate/issues)
 We use GitHub Issues to track public bugs. Report a bug by opening a new issue.
 
 Your bug reports should have:
@@ -104,7 +104,7 @@ trim_trailing_whitespace = false
 indent_style = space
 indent_size = 2
 ```
-## [License](https://github.com/AppleGamer22/scr-web/blob/master/LICENSE.md)
+## [License](https://github.com/AppleGamer22/cocainate/blob/master/LICENSE.md)
 When you submit code changes, your submissions are understood to be under the same [GNU GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
 By contributing, you agree that your contributions will be licensed under its GNU GPL-3 License.
