@@ -99,6 +99,23 @@ Running the following command will run `go build` for:
 ```bash
 make build
 ```
+
+Building from source for an individual operating system is available via:
+* Linux
+```bash
+make linux
+```
+* macOS
+```bash
+make mac
+```
+* Windows
+```bash
+make windows
+```
+
+All binary artificats are stored in the `bin` child directory in the codebase's root directory.
+
 ### Packaging
 Running the following command will package the program binaries and shell (BASH, ZSH, FISH and PowerShell) completion scripts for:
 * Arch Linux Distributions
