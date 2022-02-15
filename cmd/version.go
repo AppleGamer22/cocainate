@@ -29,7 +29,7 @@ var versionCommand = &cobra.Command{
 }
 
 func init() {
-	versionCommand.Flags().BoolVarP(&verbose, "verbose", "v", false, "-v or --verbose")
+	versionCommand.Flags().BoolVarP(&verbose, "verbose", "v", false, "version, git commit hash, compiler version & platform")
 
 	RootCommand.AddCommand(versionCommand)
 }
