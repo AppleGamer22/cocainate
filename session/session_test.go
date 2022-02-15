@@ -21,19 +21,6 @@ func TestDuration(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// Test for session interrupt signal
-func TestInterrupt(t *testing.T) {
-	s := session.NewSession(0, 0)
-	err := s.Start()
-	require.NoError(t, err)
-
-	err = s.Kill()
-	require.NoError(t, err)
-
-	err = s.Wait()
-	require.NoError(t, err)
-}
-
 // Test for session programmatic stop while Wait is running
 func TestKill(t *testing.T) {
 	s := session.NewSession(0, 0)

@@ -55,6 +55,7 @@ func (session *Session) Wait() error {
 	if session.Duration > 0 {
 		select {
 		case <-time.After(session.Duration):
+			break
 		case <-session.signals:
 			fmt.Print("\b\b")
 		}
