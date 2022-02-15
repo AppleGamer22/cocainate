@@ -3,7 +3,7 @@ package cmd
 import (
 	"time"
 
-	"github.com/AppleGamer22/cocainate/internal"
+	"github.com/AppleGamer22/cocainate/session"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +15,7 @@ var RootCommand = &cobra.Command{
 	Short: "keep screen awake",
 	Long:  "keep screen awake",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		session := internal.NewSession(pid, duration)
+		session := session.NewSession(pid, duration)
 
 		if err := session.Start(); err != nil {
 			return err

@@ -1,11 +1,11 @@
-package internal_test
+package session_test
 
 import (
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/AppleGamer22/cocainate/internal"
+	"github.com/AppleGamer22/cocainate/session"
 
 	// "github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -13,7 +13,7 @@ import (
 
 // Test for session duration
 func TestDuration(t *testing.T) {
-	session := internal.NewSession(0, time.Nanosecond)
+	session := session.NewSession(0, time.Nanosecond)
 	err := session.Start()
 	require.NoError(t, err)
 
@@ -23,7 +23,7 @@ func TestDuration(t *testing.T) {
 
 // Test for session interrupt signal
 func TestInterrupt(t *testing.T) {
-	session := internal.NewSession(0, 0)
+	session := session.NewSession(0, 0)
 	err := session.Start()
 	require.NoError(t, err)
 
@@ -36,7 +36,7 @@ func TestInterrupt(t *testing.T) {
 
 // Test for session programtic stop while Wait is running
 func TestKill(t *testing.T) {
-	session := internal.NewSession(0, 0)
+	session := session.NewSession(0, 0)
 	err := session.Start()
 	require.NoError(t, err)
 
@@ -63,7 +63,7 @@ func TestKill(t *testing.T) {
 
 // Test for session programtic stop while Wait is not running
 func TestStop(t *testing.T) {
-	session := internal.NewSession(0, 0)
+	session := session.NewSession(0, 0)
 	err := session.Start()
 	require.NoError(t, err)
 
@@ -73,7 +73,7 @@ func TestStop(t *testing.T) {
 
 // Test for when Wait is called before Start
 func TestErrors(t *testing.T) {
-	session := internal.NewSession(0, 0)
+	session := session.NewSession(0, 0)
 	err := session.Wait()
 	require.Error(t, err)
 

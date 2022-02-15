@@ -6,8 +6,8 @@ LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Has
 build: linux mac windows
 
 test:
-	@echo "Testing $(VERSION) internal"
-	go clean -testcache && go test -v -race -cover ./internal
+	@echo "Testing $(VERSION) session"
+	go clean -testcache && go test -v -race -cover ./session
 	@echo "Testing $(VERSION) cmd"
 	go clean -testcache && go test -v -race -cover ./cmd
 
