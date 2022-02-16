@@ -22,7 +22,7 @@ type Session struct {
 	active     bool
 }
 
-func NewSession(pid int, duration time.Duration) Session {
+func New(pid int, duration time.Duration) Session {
 	return Session{
 		PID:      pid,
 		Duration: duration,
