@@ -2,6 +2,7 @@ package session
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -55,13 +56,14 @@ func (session *Session) Wait() error {
 	if session.Duration > 0 {
 		select {
 		case <-time.After(session.Duration):
-			break
 		case <-session.signals:
-			fmt.Print("\b\b")
 		}
 	} else {
 		<-session.signals
-		fmt.Print("\b\b")
+	}
+
+	if flag.Lookup("test.v") == nil {
+		fmt.Print("\033[2K\r")
 	}
 
 	return session.Stop()

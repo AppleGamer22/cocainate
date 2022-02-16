@@ -21,31 +21,41 @@ func TestDuration(t *testing.T) {
 	require.NoError(t, err)
 }
 
+// Test for session interrupt signal
+func TestInterrupt(t *testing.T) {
+	s := session.New(0, 0)
+	err := s.Start()
+	require.NoError(t, err)
+
+	err = s.Kill()
+	require.NoError(t, err)
+
+	err = s.Wait()
+	require.NoError(t, err)
+}
+
 // Test for session programmatic stop while Wait is running
 func TestKill(t *testing.T) {
 	s := session.New(0, 0)
 	err := s.Start()
 	require.NoError(t, err)
 
-	errs := make(chan error, 2)
 	var wg sync.WaitGroup
 	wg.Add(2)
 
 	go func() {
-		errs <- s.Wait()
+		err := s.Wait()
+		require.NoError(t, err)
 		wg.Done()
 	}()
 
 	go func() {
-		errs <- s.Kill()
+		err := s.Kill()
+		require.NoError(t, err)
 		wg.Done()
 	}()
 
 	wg.Wait()
-	for i := 0; i < cap(errs); i++ {
-		err := <-errs
-		require.NoError(t, err)
-	}
 }
 
 // Test for session programmatic stop while Wait is not running
