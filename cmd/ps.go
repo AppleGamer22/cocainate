@@ -6,39 +6,12 @@ import (
 	"os/user"
 	"text/tabwriter"
 
+	"github.com/AppleGamer22/cocainate/ps"
 	"github.com/shirou/gopsutil/process"
 	"github.com/spf13/cobra"
 )
 
 var all bool
-
-var blacklistedProcesses = []string{
-	"systemd",
-	"sddm-helper",
-	"pulseaudio",
-	"xdg-document-portal",
-	"gdm-session-worker",
-	"gdm-x-session",
-	"gnome-session-binary",
-	"dbus-daemon",
-	"at-spi-bus-launcher",
-	"ibus-daemon",
-	"gnome-shell",
-	"ibus-memconf",
-	"ibus-daemon",
-	"ibus-extension-gtk3",
-	"ibus-daemon",
-	"gvfsd-trash",
-	"gvfsd",
-	"evolution-alarm-notify",
-	"gnome-session-binary",
-	"ibus-engine-simple",
-	"ibus-daemon",
-	"gsd-disk-utility-notify",
-	"gnome-session-binary",
-	"plasma-browser-integration-host",
-	"nacl_helper",
-}
 
 var psCommand = &cobra.Command{
 	Use:   "ps",
@@ -71,6 +44,11 @@ var psCommand = &cobra.Command{
 				continue
 			}
 
+			processName, err := p.Name()
+			if err != nil {
+				continue
+			}
+
 			parent, err := p.Parent()
 			if err != nil {
 				continue
@@ -80,13 +58,8 @@ var psCommand = &cobra.Command{
 				continue
 			}
 
-			processName, err := p.Name()
-			if err != nil {
-				continue
-			}
-
 			var blacklisted bool
-			for _, blacklistedProcess := range blacklistedProcesses {
+			for _, blacklistedProcess := range ps.Blocklist {
 				if processName == blacklistedProcess || parentName == blacklistedProcess {
 					blacklisted = true
 					break
