@@ -54,5 +54,6 @@ completion:
 
 clean:
 	rm -rf bin cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
+	go clean -testcache -cache
 
 .PHONY: all build test clean package linux mac windows
