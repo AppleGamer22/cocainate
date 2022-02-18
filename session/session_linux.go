@@ -32,12 +32,12 @@ func (session *Session) Start() error {
 		return call.Err
 	}
 	session.Lock()
+	defer session.Unlock()
 	if err := call.Store(&session.cookie); err != nil {
 		return err
 	}
 
 	session.active = true
-	session.Unlock()
 	return nil
 }
 
@@ -58,6 +58,7 @@ func (session *Session) Stop() error {
 	defer connection.Close()
 
 	session.Lock()
+	defer session.Unlock()
 	object := connection.Object(screensaver, path)
 	err = object.Call(uninhibit, 0, session.cookie).Err
 	if err != nil {
@@ -66,6 +67,5 @@ func (session *Session) Stop() error {
 
 	session.active = false
 	session.cookie = 0
-	session.Unlock()
 	return nil
 }

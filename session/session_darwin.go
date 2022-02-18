@@ -11,8 +11,6 @@ Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/
 A non-nil error is returned if the session failed to start.
 */
 func (session *Session) Start() error {
-	var args []string
-
 	// if session.Duration > 0 {
 	// 	args = append(args, "-t")
 	// 	seconds := fmt.Sprintf("%d", int(session.Duration.Round(time.Second)))
@@ -26,14 +24,13 @@ func (session *Session) Start() error {
 	// }
 
 	session.Lock()
-	session.caffeinate = exec.Command("caffeinate", args...)
-	err := session.caffeinate.Start()
-	if err != nil {
-		return nil
+	defer session.Unlock()
+	session.caffeinate = exec.Command("caffeinate")
+	if err := session.caffeinate.Start(); err != nil {
+		return err
 	}
 
 	session.active = true
-	session.Unlock()
 	return nil
 }
 
@@ -52,8 +49,8 @@ func (session *Session) Stop() error {
 	}
 
 	session.Lock()
+	defer session.Unlock()
 	session.active = false
 	session.caffeinate = nil
-	session.Unlock()
 	return nil
 }
