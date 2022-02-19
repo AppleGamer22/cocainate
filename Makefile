@@ -44,12 +44,10 @@ package: build completion
 	rm -f cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
 
 completion:
-	go build -v $(LDFLAGS) -o ./bin/cocainate
-	./bin/cocainate completion bash > cocainate.bash
-	./bin/cocainate completion fish > cocainate.fish
-	./bin/cocainate completion zsh > cocainate.zsh
-	./bin/cocainate completion powershell > cocainate.ps1
-	rm bin/cocainate
+	go run . completion bash > cocainate.bash
+	go run . completion fish > cocainate.fish
+	go run . completion zsh > cocainate.zsh
+	go run . completion powershell > cocainate.ps1
 
 
 clean:
