@@ -13,7 +13,7 @@ import (
 
 // Test for session duration
 func TestDuration(t *testing.T) {
-	s := session.New(0, time.Nanosecond)
+	s := session.New(time.Nanosecond)
 	err := s.Start()
 	require.NoError(t, err)
 
@@ -23,7 +23,7 @@ func TestDuration(t *testing.T) {
 
 // Test for session interrupt signal
 func TestInterrupt(t *testing.T) {
-	s := session.New(0, 0)
+	s := session.New(0)
 	err := s.Start()
 	require.NoError(t, err)
 
@@ -36,7 +36,7 @@ func TestInterrupt(t *testing.T) {
 
 // Test for session programmatic stop while Wait is running
 func TestKill(t *testing.T) {
-	s := session.New(0, 0)
+	s := session.New(0)
 	err := s.Start()
 	require.NoError(t, err)
 
@@ -60,7 +60,7 @@ func TestKill(t *testing.T) {
 
 // Test for session programmatic stop while Wait is not running
 func TestStop(t *testing.T) {
-	s := session.New(0, 0)
+	s := session.New(0)
 	err := s.Start()
 	require.NoError(t, err)
 
@@ -70,7 +70,7 @@ func TestStop(t *testing.T) {
 
 // Test for when Wait is called before Start
 func TestErrors(t *testing.T) {
-	s := session.New(0, 0)
+	s := session.New(0)
 	err := s.Wait()
 	require.Error(t, err)
 
