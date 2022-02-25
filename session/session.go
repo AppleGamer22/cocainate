@@ -15,7 +15,7 @@ import (
 
 type Session struct {
 	sync.Mutex
-	PID        int
+	// PID        int
 	Duration   time.Duration
 	signals    chan os.Signal
 	cookie     uint32
@@ -23,9 +23,14 @@ type Session struct {
 	active     bool
 }
 
-func New(pid int, duration time.Duration) Session {
+/*
+Creates a New session instance with duration.
+
+If the session's duration is 0, the session will stop after a termination signal or a call to session.Stop.
+*/
+func New(duration time.Duration) Session {
 	return Session{
-		PID:      pid,
+		// PID:      pid,
 		Duration: duration,
 		signals:  make(chan os.Signal, 1),
 	}
