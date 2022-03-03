@@ -1,6 +1,7 @@
 package ps
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -8,18 +9,19 @@ import (
 )
 
 func Notify(pid int32, pollingDuration time.Duration) chan error {
-	signals := make(chan error, 1)
+	errs := make(chan error, 1)
 
 	abort := pid == 0 || pid == int32(os.Getpid()) && pollingDuration <= 0
 
 	if abort {
-		return signals
+		errs <- errors.New("invalid PID or process polling interval, both must be non-0")
+		return errs
 	}
 
 	go func() {
 		p, err := process.NewProcess(pid)
 		if err != nil {
-			signals <- err
+			errs <- err
 			return
 		}
 
@@ -27,10 +29,10 @@ func Notify(pid int32, pollingDuration time.Duration) chan error {
 		for range ticker.C {
 			running, _ := p.IsRunning()
 			if !running {
-				signals <- nil
+				errs <- nil
 				break
 			}
 		}
 	}()
-	return signals
+	return errs
 }

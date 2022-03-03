@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"time"
 
 	"github.com/AppleGamer22/cocainate/session"
@@ -14,6 +15,12 @@ var RootCommand = &cobra.Command{
 	Use:   "cocainate",
 	Short: "keep screen awake",
 	Long:  "keep screen awake",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if pid != 0 && duration == 0 {
+			return errors.New("process poling interval must be provided via the -d flag")
+		}
+		return nil
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		s := session.New(duration, pid)
 

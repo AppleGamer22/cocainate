@@ -6,10 +6,10 @@ LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Has
 build: linux mac windows
 
 test:
-	@echo "Testing $(VERSION) session"
-	go clean -testcache && go test -v -race -cover ./session
-	@echo "Testing $(VERSION) cmd"
-	go clean -testcache && go test -v -race -cover ./cmd
+	go clean -testcache
+	go test -v -race -cover ./session
+	go test -v -race -cover ./ps
+	go test -v -race -cover ./cmd
 
 linux:
 	GOOS=linux GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_linux_amd64
