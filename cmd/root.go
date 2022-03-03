@@ -15,7 +15,7 @@ var RootCommand = &cobra.Command{
 	Short: "keep screen awake",
 	Long:  "keep screen awake",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		s := session.New(duration)
+		s := session.New(duration, pid)
 
 		if err := s.Start(); err != nil {
 			return err
@@ -26,5 +26,5 @@ var RootCommand = &cobra.Command{
 
 func init() {
 	RootCommand.Flags().DurationVarP(&duration, "duration", "d", 0, "duration with units ns, us (or µs), ms, s, m, h")
-	// RootCommand.Flags().IntVar(&pid, "pid", 0, "process ID")
+	RootCommand.Flags().IntVar(&pid, "pid", 0, "process ID")
 }

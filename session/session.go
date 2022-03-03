@@ -11,11 +11,13 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/AppleGamer22/cocainate/ps"
 )
 
 type Session struct {
 	sync.Mutex
-	// PID        int
+	PID        int
 	Duration   time.Duration
 	signals    chan os.Signal
 	cookie     uint32
@@ -28,9 +30,9 @@ Creates a New session instance with duration.
 
 If the session's duration is 0, the session will stop after a termination signal or a call to session.Stop.
 */
-func New(duration time.Duration) Session {
+func New(duration time.Duration, pid int) Session {
 	return Session{
-		// PID:      pid,
+		PID:      pid,
 		Duration: duration,
 		signals:  make(chan os.Signal, 1),
 	}
@@ -56,7 +58,13 @@ func (session *Session) Wait() error {
 		session.signals = make(chan os.Signal, 1)
 		session.Unlock()
 	}
+
 	signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
+
+	waitForProcess := session.PID != 0 && session.PID != os.Getpid() && session.Duration != 0
+	if waitForProcess {
+		ps.Notify(int32(session.PID), session.Duration, session.signals)
+	}
 
 	if session.Duration > 0 {
 		select {
