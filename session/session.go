@@ -61,12 +61,17 @@ func (session *Session) Wait() error {
 
 	signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 
-	waitForProcess := session.PID != 0 && session.PID != os.Getpid() && session.Duration != 0
-	if waitForProcess {
-		ps.Notify(int32(session.PID), session.Duration, session.signals)
-	}
-
-	if session.Duration > 0 {
+	if session.Duration > 0 && session.PID != 0 && session.PID != os.Getpid() {
+		select {
+		case psError := <-ps.Notify(int32(session.PID), session.Duration):
+			if stoppingError := session.Stop(); stoppingError != nil && psError != nil {
+				return fmt.Errorf("%v\n%v", psError, stoppingError)
+			} else {
+				return psError
+			}
+		case <-session.signals:
+		}
+	} else if session.Duration > 0 {
 		select {
 		case <-time.After(session.Duration):
 		case <-session.signals:
