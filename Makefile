@@ -1,5 +1,5 @@
 SHELL:=/bin/bash
-VERSION:=1.0.2
+VERSION:=1.0.5
 PACKAGE:="github.com/AppleGamer22/cocainate"
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
 
