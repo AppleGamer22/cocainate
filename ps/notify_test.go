@@ -2,6 +2,7 @@ package ps_test
 
 import (
 	"os/exec"
+	"runtime"
 	"sync"
 	"testing"
 	"time"
@@ -14,7 +15,12 @@ func TestNotify(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(3)
 
-	cmd := exec.Command("man", "ls")
+	cmd := func() *exec.Cmd {
+		if runtime.GOOS != "windows" {
+			return exec.Command("man", "man")
+		}
+		return exec.Command("help")
+	}()
 
 	err := cmd.Start()
 	require.NoError(t, err)
