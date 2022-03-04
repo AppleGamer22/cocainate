@@ -2,6 +2,7 @@ package ps
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"time"
 
@@ -9,6 +10,7 @@ import (
 )
 
 func Notify(pid int32, pollingDuration time.Duration) chan error {
+	fmt.Println(pid)
 	errs := make(chan error, 1)
 
 	abort := pid == 0 || pid == int32(os.Getpid()) && pollingDuration <= 0
@@ -19,15 +21,20 @@ func Notify(pid int32, pollingDuration time.Duration) chan error {
 	}
 
 	go func() {
-		p, err := process.NewProcess(pid)
-		if err != nil {
-			errs <- err
-			return
-		}
-
 		ticker := time.NewTicker(pollingDuration)
 		for range ticker.C {
-			running, _ := p.IsRunning()
+			p, err := process.NewProcess(pid)
+			if err != nil {
+				// process does not exist
+				errs <- nil
+				break
+			}
+			running, err := p.IsRunning()
+			if err != nil {
+				errs <- err
+				break
+			}
+
 			if !running {
 				errs <- nil
 				break
