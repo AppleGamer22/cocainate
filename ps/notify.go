@@ -9,6 +9,11 @@ import (
 	"github.com/shirou/gopsutil/process"
 )
 
+/*
+Generate a channel for termination signal for external process (with PID).
+
+A polling interval is used as delay between process checks.
+*/
 func Notify(pid int32, pollingDuration time.Duration) chan error {
 	fmt.Println(pid)
 	errs := make(chan error, 1)

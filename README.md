@@ -37,7 +37,7 @@ go install github.com/AppleGamer22/cocainate
 ```
 
 ## Functionality
-### Global `-d`/`--duration` Flag
+### Root `-d`/`--duration` Flag
 This is an optional flag that accepts a duration string (see [Go's `time.ParseDuration`](https://pkg.go.dev/time#ParseDuration) for more details). If this flag is not provided, the program will run until manually stopped.
 
 #### Acceptable Time Units
@@ -53,8 +53,10 @@ This is an optional flag that accepts a duration string (see [Go's `time.ParseDu
 * 1 hour, 10 minutes and 10 seconds: `-d 1h10m10s`
 * 1 microsecond: `-d 1us`
 
-<!-- ### Global `--pid` Flag
-This is an optional flag that accepts a process ID (PID). If a valid PID is provided, the program will wait until that process is terminated. -->
+If the `--pid` flag is provided, the `-d` flag's value is used as process polling interval.
+
+### Root `--pid` Flag
+This is an optional flag that accepts a process ID (PID). If a valid PID is provided, the program will wait until that process is terminated. The delay between the termination of the provided process and the termination of screensaver inhibitation depends on the `-d` flag (which must be provided).
 
 ### `version` Sub-command
 #### `-v`/`--verbose` Flag
