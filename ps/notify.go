@@ -30,7 +30,7 @@ func Notify(pid int32, pollingDuration time.Duration) chan error {
 				break
 			}
 			running, err := p.IsRunning()
-			if err != nil {
+			if err != nil && err.Error() != "exit status 1" {
 				errs <- err
 				break
 			}
