@@ -2,7 +2,6 @@ package session
 
 import (
 	"errors"
-	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -78,10 +77,6 @@ func (session *Session) Wait() error {
 		}
 	} else {
 		<-session.signals
-	}
-
-	if flag.Lookup("test.v") == nil {
-		fmt.Print("\033[2K\r")
 	}
 
 	return session.Stop()

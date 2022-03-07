@@ -24,6 +24,9 @@ windows:
 	GOOS=windows GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_amd64.exe
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
 
+debug:
+	go build .
+
 define package_bins
 	for file in bin/cocainate_$(VERSION)*; do \
 		if [[ "$$file" == *".exe"* ]]; then \
@@ -51,7 +54,7 @@ completion:
 
 
 clean:
-	rm -rf bin cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
+	rm -rf cocainate bin cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
 	go clean -testcache -cache
 
-.PHONY: all build test clean package linux mac windows
+.PHONY: all build test clean package linux mac windows debug
