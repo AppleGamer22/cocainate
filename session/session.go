@@ -31,8 +31,8 @@ If the session's duration is 0, the session will stop after a termination signal
 */
 func New(duration time.Duration, pid int) Session {
 	return Session{
-		PID:      pid,
 		Duration: duration,
+		PID:      pid,
 		signals:  make(chan os.Signal, 1),
 	}
 }
@@ -44,42 +44,42 @@ Wait will block further execution until the user send an interrupt signal, or un
 
 A non-nil error is returned if the D-BUS session connection fails, or if the un-inhabitation call fails.
 */
-func (session *Session) Wait() error {
-	linuxError := runtime.GOOS == "linux" && (!session.active || session.cookie == 0)
-	macError := runtime.GOOS == "darwin" && (!session.active || session.caffeinate == nil)
-	windowsError := runtime.GOOS == "windows" && !session.active
+func (s *Session) Wait() error {
+	linuxError := runtime.GOOS == "linux" && (!s.active || s.cookie == 0)
+	macError := runtime.GOOS == "darwin" && (!s.active || s.caffeinate == nil)
+	windowsError := runtime.GOOS == "windows" && !s.active
 	if linuxError || macError || windowsError {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
-	if session.signals == nil {
-		session.Lock()
-		session.signals = make(chan os.Signal, 1)
-		session.Unlock()
+	if s.signals == nil {
+		s.Lock()
+		s.signals = make(chan os.Signal, 1)
+		s.Unlock()
 	}
 
-	signal.Notify(session.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
+	signal.Notify(s.signals, os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
 
-	if session.Duration > 0 && session.PID != 0 && session.PID != os.Getpid() {
+	if s.Duration > 0 && s.PID != 0 && s.PID != os.Getpid() {
 		select {
-		case psError := <-ps.Notify(int32(session.PID), session.Duration):
-			if stoppingError := session.Stop(); stoppingError != nil && psError != nil {
+		case psError := <-ps.Notify(int32(s.PID), s.Duration):
+			if stoppingError := s.Stop(); stoppingError != nil && psError != nil {
 				return fmt.Errorf("%v\n%v", psError, stoppingError)
 			} else {
 				return psError
 			}
-		case <-session.signals:
+		case <-s.signals:
 		}
-	} else if session.Duration > 0 {
+	} else if s.Duration > 0 {
 		select {
-		case <-time.After(session.Duration):
-		case <-session.signals:
+		case <-time.After(s.Duration):
+		case <-s.signals:
 		}
 	} else {
-		<-session.signals
+		<-s.signals
 	}
 
-	return session.Stop()
+	return s.Stop()
 }
 
 /*
@@ -87,17 +87,17 @@ Kill terminates the current session.
 
 Can be called only when Wait is running in the background.
 */
-func (session *Session) Kill() error {
-	linuxError := runtime.GOOS == "linux" && (!session.active || session.cookie == 0)
-	macError := runtime.GOOS == "darwin" && (!session.active || session.caffeinate == nil)
-	windowsError := runtime.GOOS == "windows" && !session.active
+func (s *Session) Kill() error {
+	linuxError := runtime.GOOS == "linux" && (!s.active || s.cookie == 0)
+	macError := runtime.GOOS == "darwin" && (!s.active || s.caffeinate == nil)
+	windowsError := runtime.GOOS == "windows" && !s.active
 
-	if session.signals == nil || linuxError || macError || windowsError {
+	if s.signals == nil || linuxError || macError || windowsError {
 		return errors.New("Start has not been called successfully or Wait is not running in the background")
 	}
 
-	session.Lock()
-	session.signals <- os.Interrupt
-	session.Unlock()
+	s.Lock()
+	s.signals <- os.Interrupt
+	s.Unlock()
 	return nil
 }

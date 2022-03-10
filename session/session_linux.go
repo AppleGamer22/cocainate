@@ -18,7 +18,7 @@ Starts the session (according to https://people.freedesktop.org/~hadess/idle-inh
 
 A non-nil error is returned if the D-BUS session connection fails, if the inhabitation call fails or if the cookie recovery fails.
 */
-func (session *Session) Start() error {
+func (s *Session) Start() error {
 	connection, err := dbus.SessionBus()
 	if err != nil {
 		return err
@@ -31,13 +31,13 @@ func (session *Session) Start() error {
 	if call.Err != nil {
 		return call.Err
 	}
-	session.Lock()
-	defer session.Unlock()
-	if err := call.Store(&session.cookie); err != nil {
+	s.Lock()
+	defer s.Unlock()
+	if err := call.Store(&s.cookie); err != nil {
 		return err
 	}
 
-	session.active = true
+	s.active = true
 	return nil
 }
 
@@ -46,8 +46,8 @@ Stop kills an already-started session while Wait is not running in the backgroun
 
 This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
 */
-func (session *Session) Stop() error {
-	if !session.active || session.cookie == 0 {
+func (s *Session) Stop() error {
+	if !s.active || s.cookie == 0 {
 		return errors.New("Stop can be called only after Start has been called successfully")
 	}
 
@@ -57,15 +57,15 @@ func (session *Session) Stop() error {
 	}
 	defer connection.Close()
 
-	session.Lock()
-	defer session.Unlock()
+	s.Lock()
+	defer s.Unlock()
 	object := connection.Object(screensaver, path)
-	err = object.Call(uninhibit, 0, session.cookie).Err
+	err = object.Call(uninhibit, 0, s.cookie).Err
 	if err != nil {
 		return err
 	}
 
-	session.active = false
-	session.cookie = 0
+	s.active = false
+	s.cookie = 0
 	return nil
 }

@@ -10,7 +10,7 @@ Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/
 
 A non-nil error is returned if the session failed to start.
 */
-func (session *Session) Start() error {
+func (s *Session) Start() error {
 	// if session.Duration > 0 {
 	// 	args = append(args, "-t")
 	// 	seconds := fmt.Sprintf("%d", int(session.Duration.Round(time.Second)))
@@ -23,14 +23,14 @@ func (session *Session) Start() error {
 	// 	args = append(args, pid)
 	// }
 
-	session.Lock()
-	defer session.Unlock()
-	session.caffeinate = exec.Command("caffeinate")
-	if err := session.caffeinate.Start(); err != nil {
+	s.Lock()
+	defer s.Unlock()
+	s.caffeinate = exec.Command("caffeinate")
+	if err := s.caffeinate.Start(); err != nil {
 		return err
 	}
 
-	session.active = true
+	s.active = true
 	return nil
 }
 
@@ -39,18 +39,18 @@ Stop kills an already-started session while Wait is not running in the backgroun
 
 This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
 */
-func (session *Session) Stop() error {
-	if !session.active || session.caffeinate == nil {
+func (s *Session) Stop() error {
+	if !s.active || s.caffeinate == nil {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
-	if err := session.caffeinate.Process.Kill(); err != nil {
+	if err := s.caffeinate.Process.Kill(); err != nil {
 		return err
 	}
 
-	session.Lock()
-	defer session.Unlock()
-	session.active = false
-	session.caffeinate = nil
+	s.Lock()
+	defer s.Unlock()
+	s.active = false
+	s.caffeinate = nil
 	return nil
 }

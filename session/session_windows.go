@@ -15,7 +15,7 @@ Starts a SetThreadExecutionState session (https://docs.microsoft.com/en-us/windo
 
 A non-nil error is returned if the session failed to start.
 */
-func (session *Session) Start() error {
+func (s *Session) Start() error {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	setThreadExecStateProc := kernel32.NewProc("SetThreadExecutionState")
 	r1, _, err := setThreadExecStateProc.Call(uintptr(esContinuous | esSystemRequired))
@@ -23,9 +23,9 @@ func (session *Session) Start() error {
 		return err
 	}
 
-	session.Lock()
-	session.active = true
-	session.Unlock()
+	s.Lock()
+	s.active = true
+	s.Unlock()
 	return nil
 }
 
@@ -34,8 +34,8 @@ Stop kills an already-started session while Wait is not running in the backgroun
 
 This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
 */
-func (session *Session) Stop() error {
-	if !session.active {
+func (s *Session) Stop() error {
+	if !s.active {
 		return errors.New("Stop can be called only after Start has been called successfully")
 	}
 
@@ -46,8 +46,8 @@ func (session *Session) Stop() error {
 		return err
 	}
 
-	session.Lock()
-	session.active = false
-	session.Unlock()
+	s.Lock()
+	s.active = false
+	s.Unlock()
 	return nil
 }
