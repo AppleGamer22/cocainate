@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"errors"
+	"flag"
+	"fmt"
 	"time"
 
 	"github.com/AppleGamer22/cocainate/session"
@@ -28,7 +30,16 @@ var RootCommand = &cobra.Command{
 		if err := s.Start(); err != nil {
 			return err
 		}
-		return s.Wait()
+
+		if err := s.Wait(); err != nil {
+			return err
+		}
+
+		if flag.Lookup("test.v") == nil {
+			fmt.Print("\033[2K\r")
+		}
+
+		return nil
 	},
 }
 
