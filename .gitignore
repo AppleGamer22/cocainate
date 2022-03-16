@@ -1,5 +1,6 @@
 *.csv
 *.exe
+cocainate
 bin
 vendor
 .vagrant
