@@ -1,5 +1,6 @@
 SHELL:=/bin/bash
-VERSION:=1.0.5
+# git describe --tags --abbrev=0
+VERSION:=1.0.6
 PACKAGE:="github.com/AppleGamer22/cocainate"
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
 
@@ -25,7 +26,7 @@ windows:
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
 
 debug:
-	go build .
+	go build -race .
 
 define package_bins
 	for file in bin/cocainate_$(VERSION)*; do \
