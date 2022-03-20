@@ -2,8 +2,19 @@ package session
 
 import (
 	"errors"
+	"os"
 	"os/exec"
+	"sync"
+	"time"
 )
+
+type Session struct {
+	sync.Mutex
+	PID        int
+	Duration   time.Duration
+	signals    chan os.Signal
+	caffeinate *exec.Cmd
+}
 
 /*
 Starts a caffeinate (https://github.com/apple-oss-distributions/PowerManagement/tree/main/caffeinate) session.
@@ -30,7 +41,6 @@ func (s *Session) Start() error {
 		return err
 	}
 
-	s.active = true
 	return nil
 }
 
@@ -40,7 +50,7 @@ Stop kills an already-started session while Wait is not running in the backgroun
 This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
 */
 func (s *Session) Stop() error {
-	if !s.active || s.caffeinate == nil {
+	if !s.Active() {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
@@ -50,7 +60,11 @@ func (s *Session) Stop() error {
 
 	s.Lock()
 	defer s.Unlock()
-	s.active = false
 	s.caffeinate = nil
 	return nil
+}
+
+// A Boolean for session status
+func (s *Session) Active() bool {
+	return s.caffeinate != nil
 }

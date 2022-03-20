@@ -2,6 +2,9 @@ package session
 
 import (
 	"errors"
+	"os"
+	"sync"
+	"time"
 
 	dbus "github.com/godbus/dbus/v5"
 )
@@ -12,6 +15,14 @@ const (
 	inhibit     = "org.freedesktop.ScreenSaver.Inhibit"
 	uninhibit   = "org.freedesktop.ScreenSaver.UnInhibit"
 )
+
+type Session struct {
+	sync.Mutex
+	PID      int
+	Duration time.Duration
+	signals  chan os.Signal
+	cookie   uint32
+}
 
 /*
 Starts the session (according to https://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html) with a call to the D-BUS screensaver inhibitor.
@@ -37,7 +48,6 @@ func (s *Session) Start() error {
 		return err
 	}
 
-	s.active = true
 	return nil
 }
 
@@ -47,7 +57,7 @@ Stop kills an already-started session while Wait is not running in the backgroun
 This method is recommended for uses in which the session is required to terminate only by the calling program, and not by the user.
 */
 func (s *Session) Stop() error {
-	if !s.active || s.cookie == 0 {
+	if !s.Active() {
 		return errors.New("Stop can be called only after Start has been called successfully")
 	}
 
@@ -65,7 +75,11 @@ func (s *Session) Stop() error {
 		return err
 	}
 
-	s.active = false
 	s.cookie = 0
 	return nil
+}
+
+// A Boolean for session status
+func (s *Session) Active() bool {
+	return s.cookie != 0
 }

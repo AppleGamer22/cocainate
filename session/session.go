@@ -4,25 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"os/signal"
-	"runtime"
-	"sync"
 	"syscall"
 	"time"
 
 	"github.com/AppleGamer22/cocainate/ps"
 )
-
-type Session struct {
-	sync.Mutex
-	PID        int
-	Duration   time.Duration
-	signals    chan os.Signal
-	cookie     uint32
-	caffeinate *exec.Cmd
-	active     bool
-}
 
 /*
 Creates a New session instance with duration.
@@ -45,10 +32,7 @@ Wait will block further execution until the user send an interrupt signal, or un
 A non-nil error is returned if the D-BUS session connection fails, or if the un-inhabitation call fails.
 */
 func (s *Session) Wait() error {
-	linuxError := runtime.GOOS == "linux" && (!s.active || s.cookie == 0)
-	macError := runtime.GOOS == "darwin" && (!s.active || s.caffeinate == nil)
-	windowsError := runtime.GOOS == "windows" && !s.active
-	if linuxError || macError || windowsError {
+	if !s.Active() {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
@@ -88,11 +72,7 @@ Kill terminates the current session.
 Can be called only when Wait is running in the background.
 */
 func (s *Session) Kill() error {
-	linuxError := runtime.GOOS == "linux" && (!s.active || s.cookie == 0)
-	macError := runtime.GOOS == "darwin" && (!s.active || s.caffeinate == nil)
-	windowsError := runtime.GOOS == "windows" && !s.active
-
-	if s.signals == nil || linuxError || macError || windowsError {
+	if s.signals == nil || !s.Active() {
 		return errors.New("Start has not been called successfully or Wait is not running in the background")
 	}
 
