@@ -4,7 +4,7 @@ class Cocainate < Formula
 	homepage "https://github.com/AppleGamer22/cocainate"
 	license "GPL-3.0-only"
 	head "https://github.com/AppleGamer22/cocainate.git", branch: "master"
-	version "1.0.5"
+	version "1.0.7"
 
 	depends_on "bash" => :optional
 	depends_on "fish" => :optional

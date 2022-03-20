@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 # git describe --tags --abbrev=0
-VERSION:=1.0.6
+VERSION:=1.0.7
 PACKAGE:="github.com/AppleGamer22/cocainate"
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
 

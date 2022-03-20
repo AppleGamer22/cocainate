@@ -1,6 +1,6 @@
 # Maintainer: Omri Bornstein <omribor@gmail.com>
 pkgname=cocainate-bin
-pkgver=1.0.5
+pkgver=1.0.7
 pkgrel=1
 pkgdesc="Cross-platform caffeinate alternative. Pre-compiled."
 arch=('x86_64' 'aarch64')
