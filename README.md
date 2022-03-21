@@ -1,4 +1,6 @@
 # `cocainate`
+[![Go Reference](https://pkg.go.dev/badge/github.com/AppleGamer22/cocainate.svg)](https://pkg.go.dev/github.com/AppleGamer22/cocainate) [![Test](https://github.com/AppleGamer22/cocainate/actions/workflows/test.yml/badge.svg)](https://github.com/AppleGamer22/cocainate/actions/workflows/test.yml) [![Release to GitHub](https://github.com/AppleGamer22/cocainate/actions/workflows/release.yml/badge.svg)](https://github.com/AppleGamer22/cocainate/actions/workflows/release.yml) [![Update Documentation](https://github.com/AppleGamer22/cocainate/actions/workflows/tag.yml/badge.svg)](https://github.com/AppleGamer22/cocainate/actions/workflows/tag.yml)
+
 ## Description
 `cocainate` is a cross-platform CLI utility for keeping the screen awake until stopped, or for a specified duration.
 
