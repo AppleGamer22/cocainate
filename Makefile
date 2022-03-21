@@ -1,16 +1,14 @@
 SHELL:=/bin/bash
-# git describe --tags --abbrev=0
+# echo ${$(git describe --tags --abbrev=0)/v}
 VERSION:=1.0.7
-PACKAGE:="github.com/AppleGamer22/cocainate"
+PACKAGE:=github.com/AppleGamer22/cocainate
 LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(VERSION)' -X '$(PACKAGE)/cmd.Hash=$(shell git rev-list -1 HEAD)'"
 
 build: linux mac windows
 
 test:
 	go clean -testcache
-	go test -v -race -cover ./session
-	go test -v -race -cover ./ps
-	go test -v -race -cover ./cmd
+	go test -v -race -cover ./session ./ps ./cmd
 
 linux:
 	GOOS=linux GOARCH=amd64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_linux_amd64
