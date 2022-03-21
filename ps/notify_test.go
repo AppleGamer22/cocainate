@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/AppleGamer22/cocainate/ps"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNotify(t *testing.T) {
@@ -23,27 +23,27 @@ func TestNotify(t *testing.T) {
 	}()
 
 	err := cmd.Start()
-	require.NoError(t, err)
-	require.NotNil(t, cmd.Process)
+	assert.NoError(t, err)
+	assert.NotNil(t, cmd.Process)
 	pid := cmd.Process.Pid
 
 	go func() {
 		err := cmd.Wait()
-		require.Error(t, err)
+		assert.Error(t, err)
 		wg.Done()
 	}()
 
 	go func() {
 		time.Sleep(time.Nanosecond)
 		err := <-ps.Notify(int32(pid), time.Nanosecond)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 		wg.Done()
 	}()
 
 	go func() {
 		time.Sleep(time.Nanosecond * 2)
 		err := cmd.Process.Kill()
-		require.NoError(t, err)
+		assert.NoError(t, err)
 		wg.Done()
 	}()
 
