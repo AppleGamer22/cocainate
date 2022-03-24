@@ -24,7 +24,7 @@ windows:
 	GOOS=windows GOARCH=arm64 go build -v $(LDFLAGS) -o ./bin/cocainate_$(VERSION)_windows_arm64.exe
 
 debug:
-	go build -race .
+	go build -race $(LDFLAGS) .
 
 define package_bins
 	for file in bin/cocainate_$(VERSION)*; do \
