@@ -43,12 +43,12 @@ go install github.com/AppleGamer22/cocainate
 This is an optional flag that accepts a duration string (see [Go's `time.ParseDuration`](https://pkg.go.dev/time#ParseDuration) for more details). If this flag is not provided, the program will run until manually stopped.
 
 #### Acceptable Time Units
-* nanoseconds: `ns`
-* microseconds: `us` (or `µs`)
-* milliseconds: `ms`
-* seconds: `s`
-* minutes: `m`
-* hours: `h`
+* nanoseconds: *`ns`*
+* microseconds: *`us`* or *`µs`*
+* milliseconds: *`ms`*
+* seconds: *`s`*
+* minutes: *`m`*
+* hours: *`h`*
 
 #### Examples
 * 10 hours: `-d 10h`
@@ -129,3 +129,8 @@ Running the following command will package the program binaries and shell (BASH,
 ```bash
 make package
 ```
+
+## Copyright
+`cocainate` is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
+
+`cocainate` is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**; without even the implied warranty of **MERCHANTABILITY** or **FITNESS FOR A PARTICULAR PURPOSE**.  See the GNU General Public License for more details.
