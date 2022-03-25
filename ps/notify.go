@@ -9,7 +9,7 @@ import (
 )
 
 /*
-Generate a channel for termination signal for external process (with PID).
+Generate a channel for termination signal from an external process (with PID).
 
 A polling interval is used as delay between process checks.
 */
