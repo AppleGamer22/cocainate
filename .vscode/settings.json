@@ -8,5 +8,15 @@
 	],
 	"files.associations": {
 		"*.cff": "yaml"
+	},
+	"[yaml]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.detectIndentation": false,
+	},
+	"[yml]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.detectIndentation": false,
 	}
 }

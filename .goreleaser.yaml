@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+project_name: cocainate
+before:
+  hooks:
+    - env VERSION=${$(git describe --tags --abbrev=0)/v}
+    - env GORELEASER_CURRENT_TAG=$VERSION
+    - env HASH=$(shell git rev-list -1 HEAD)
+    # - go run . completion bash > cocainate.bash
+    # - go run . completion fish > cocainate.fish
+    # - go run . completion zsh > cocainate.zsh
+    # - go run . completion powershell > cocainate.ps1
+builds:
+  - goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - riscv64
+    ldflags:
+      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{.Env.VERSION}}'
+      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{.Env.HASH}}'
+    ignore:
+      - goos: windows
+        goarch: riscv64
+      - goos: darwin
+        goarch: riscv64
+archives:
+  - replacements:
+      darwin: mac
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - cocainate.bash
+      - cocainate.fish
+      - cocainate.zsh
+      - cocainate.ps1
