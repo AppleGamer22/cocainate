@@ -1,6 +1,10 @@
 *.csv
 *.exe
 cocainate
+cocainate.bash
+cocainate.fish
+cocainate.zsh
+cocainate.ps1
 bin
 vendor
 .vagrant
