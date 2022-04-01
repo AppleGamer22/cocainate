@@ -1,7 +1,11 @@
 name: Release to GitHub
 on:
   push:
-    tags: ['v*']
+    tags: 
+      - 'v*'
+      - '!*alpha*'
+      - '!*beta*'
+      - '!*rc*'
 jobs:
   github_release:
     runs-on: ubuntu-latest
