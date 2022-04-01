@@ -1,0 +1,5 @@
+version: "3"
+services:
+  cocainate:
+    container_name: cocainate
+    build: .

@@ -1,8 +1,5 @@
-FROM golang:1.17.8-alpine3.15 AS build
-WORKDIR /cocainate
-ENV CGO_ENABLED 0
+FROM kdeneon/plasma
+RUN apt-get update && apt-get install -y golang git
+WORKDIR /home/neon
 COPY . .
-RUN go build .
-
-FROM ubuntu:20.04
-RUN sudo apt install -y ubuntu-desktop-minimal
+CMD go test -v -race -cover ./session ./ps ./cmd
