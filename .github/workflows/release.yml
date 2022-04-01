@@ -1,7 +1,10 @@
 name: Release to GitHub
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
+      - main
+    tags: ['v*']
 jobs:
   github_release:
     runs-on: ubuntu-latest
