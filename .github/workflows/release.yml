@@ -1,9 +1,6 @@
 name: Release to GitHub
 on:
   push:
-    branches:
-      - master
-      - main
     tags: ['v*']
 jobs:
   github_release:
