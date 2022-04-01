@@ -68,6 +68,15 @@ nfpms:
       - apk
       - deb
       - rpm
+    contents:
+      - src: cocainate.1
+        dst: /usr/share/man/man1/cocainate.1
+      - src: cocainate.bash
+        dst: /usr/share/bash-completion/completions/cocainate
+      - src: cocainate.fish
+        dst: /usr/share/fish/completions/cocainate.fish
+      - src: cocainate.zsh
+        dst: /usr/share/zsh/site-functions/_cocainate
 release:
   github:
     owner: AppleGamer22
