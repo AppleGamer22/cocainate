@@ -3,3 +3,9 @@ services:
   cocainate:
     container_name: cocainate
     build: .
+    # security_opt:
+    #   - seccomp=unconfined
+    # environment:
+    #   - DISPLAY=:0
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix
