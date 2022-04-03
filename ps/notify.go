@@ -28,17 +28,12 @@ func Notify(pid int32, pollingDuration time.Duration) chan error {
 		for range ticker.C {
 			p, err := process.NewProcess(pid)
 			if err != nil {
-				// process does not exist
 				errs <- nil
 				break
 			}
-			running, err := p.IsRunning()
-			if err != nil && err.Error() != "exit status 1" {
-				errs <- err
-				break
-			}
 
-			if !running {
+			if running, err := p.IsRunning(); err != nil || !running {
+				// if err != nil, a race condition has occurred, the process ended after checking for its existence but before checking if it's running
 				errs <- nil
 				break
 			}

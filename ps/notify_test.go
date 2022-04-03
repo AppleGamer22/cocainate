@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/AppleGamer22/cocainate/ps"
+	"github.com/shirou/gopsutil/process"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,6 +27,9 @@ func TestNotify(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, cmd.Process)
 	pid := cmd.Process.Pid
+	exists, err := process.PidExists(int32(pid))
+	assert.NoError(t, err)
+	assert.True(t, exists)
 
 	go func() {
 		err := cmd.Wait()
@@ -34,14 +38,13 @@ func TestNotify(t *testing.T) {
 	}()
 
 	go func() {
-		time.Sleep(time.Nanosecond)
 		err := <-ps.Notify(int32(pid), time.Nanosecond)
 		assert.NoError(t, err)
 		wg.Done()
 	}()
 
 	go func() {
-		time.Sleep(time.Nanosecond * 2)
+		time.Sleep(time.Nanosecond * 5)
 		err := cmd.Process.Kill()
 		assert.NoError(t, err)
 		wg.Done()
