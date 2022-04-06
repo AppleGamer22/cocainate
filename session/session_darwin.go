@@ -36,7 +36,7 @@ func (s *Session) Start() error {
 
 	s.Lock()
 	defer s.Unlock()
-	s.caffeinate = exec.Command("caffeinate")
+	s.caffeinate = exec.Command("caffeinate", "-diu")
 	if err := s.caffeinate.Start(); err != nil {
 		return err
 	}
