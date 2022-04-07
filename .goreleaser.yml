@@ -112,6 +112,7 @@ brews:
   - tap:
       owner: AppleGamer22
       name: homebrew-cocainate
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     download_strategy: CurlDownloadStrategy
     commit_author:
       name: Omri Bornstein
