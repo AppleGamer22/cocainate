@@ -9,7 +9,7 @@ The program's functionality and name are inspired by [macOS's `caffeinate`](http
 
 This name is simply a stupid ~~pun~~, therefore **I do not condone and do not promote drug use**, for more information: [Wikipedia](https://en.wikipedia.org/wiki/Cocaine_(song)).
 
-## Installation (working progress)
+## Installation
 ### Arch Linux Distributions
 * [`yay`](https://github.com/Jguer/yay):
 ```bash

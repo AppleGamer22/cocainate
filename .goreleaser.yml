@@ -81,7 +81,7 @@ release:
   github:
     owner: AppleGamer22
     name: cocainate
-  discussion_category_name: Releases
+  discussion_category_name: General
   prerelease: auto
 aurs:
   - homepage: https://github.com/AppleGamer22/cocainate
