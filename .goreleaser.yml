@@ -2,10 +2,7 @@
 project_name: cocainate
 before:
   hooks:
-    - sh -c "go run . completion bash > cocainate.bash"
-    - sh -c "go run . completion fish > cocainate.fish"
-    - sh -c "go run . completion zsh > cocainate.zsh"
-    - sh -c "go run . completion powershell > cocainate.ps1"
+    - make completion
 builds:
   - id: linux
     goos:
@@ -82,6 +79,24 @@ release:
     owner: AppleGamer22
     name: cocainate
   discussion_category_name: General
+  footer: |
+    # Installation
+    ## Arch Linux Distributions
+    * [`yay`](https://github.com/Jguer/yay):
+    ```bash
+    yay -S cocainate-bin
+    ```
+    * [`paru`](https://github.com/morganamilo/paru):
+    ```bash
+    paru -S cocainate-bin
+    ```
+
+    ## macOS
+    * [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
+    ```bash
+    brew tap AppleGamer22/cocainate
+    brew install cocainate
+    ```
   prerelease: auto
 aurs:
   - homepage: https://github.com/AppleGamer22/cocainate
