@@ -27,7 +27,7 @@ jobs:
           # sudo systemctl isolate graphical
           # sudo systemctl start gdm3
       - name: Set-up Go
-        uses: actions/setup-go@v2.1.3
+        uses: actions/setup-go@v3.0.0
         with:
           go-version: "1.17.7"
       - name: Test
