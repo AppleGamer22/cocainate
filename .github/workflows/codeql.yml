@@ -1,0 +1,29 @@
+name: CodeQL
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Pull Source Code
+      uses: actions/checkout@v2.3.4
+    - name: Set-up Go
+      uses: actions/setup-go@v2.1.3
+      with:
+        go-version: "1.17.8"
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: go
+    - name: Build
+      run: make debug
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2

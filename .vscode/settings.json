@@ -1,7 +1,17 @@
 {
 	"cSpell.words": [
+		"aurs",
 		"caffeinate",
 		"cocainate",
+		"codeql",
+		"dbus",
+		"goarch",
+		"goreleaser",
+		"ldflags",
+		"nfpms",
+		"optdepends",
+		"paru",
+		"pkgdir",
 		"rber",
 		"rberrors",
 		"riscv"
