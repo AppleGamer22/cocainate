@@ -3,6 +3,7 @@ project_name: cocainate
 before:
   hooks:
     - make completion
+    - sed -i "s/vVERSION/$(git describe --tags --abbrev=0)/" cocainate.1
 builds:
   - id: linux
     goos:
@@ -126,7 +127,7 @@ aurs:
 brews:
   - tap:
       owner: AppleGamer22
-      name: homebrew-cocainate
+      name: homebrew-tap
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     download_strategy: CurlDownloadStrategy
     commit_author:

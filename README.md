@@ -21,10 +21,9 @@ paru -S cocainate-bin
 ```
 
 ### macOS
-* [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
+* [Homebrew Tap](https://github.com/AppleGamer22/homebrew-tap):
 ```bash
-brew tap AppleGamer22/cocainate
-brew install cocainate
+brew install AppleGamer22/tap/cocainate
 ```
 
 ### Windows (working progress)
