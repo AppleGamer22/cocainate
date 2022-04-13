@@ -2,8 +2,7 @@
 project_name: cocainate
 before:
   hooks:
-    - make completion
-    - sed -i "s/vVERSION/$(git describe --tags --abbrev=0)/" cocainate.1
+    - make completion manual
 builds:
   - id: linux
     goos:
