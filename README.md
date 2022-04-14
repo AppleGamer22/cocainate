@@ -119,16 +119,6 @@ make windows
 
 All binary artificats are stored in the `bin` child directory in the codebase's root directory.
 
-### Packaging
-Running the following command will package the program binaries and shell (BASH, ZSH, FISH and PowerShell) completion scripts for:
-* Arch Linux Distributions
-* macOS
-* Windows
-
-```bash
-make package
-```
-
 ## Copyright
 `cocainate` is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
 
