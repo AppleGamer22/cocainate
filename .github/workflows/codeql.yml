@@ -1,9 +1,15 @@
 name: CodeQL
 on:
   push:
-    branches: ["**"]
+    paths:
+      - "*.go"
+      - "go.mod"
+      - "go.work"
   pull_request:
-    branches: ["**"]
+    types:
+      - opened
+      - reopened
+      - closed
 jobs:
   analyze:
     strategy:
