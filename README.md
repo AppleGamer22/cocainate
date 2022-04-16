@@ -33,6 +33,9 @@ winget install AppleGamer22.cocainate
 ```
 ### Other
 * `go`:
+	* Does not ship with:
+		* a manual page
+		* pre-built shell completion scripts
 ```
 go install github.com/AppleGamer22/cocainate
 ```
@@ -87,37 +90,24 @@ Running the following command will run `go test` on the cmd and session sub-modu
 make test
 ```
 ### Building From Source
-Running the following command will run `go build` for:
-* Linux
-	* AMD/Intel 64-bit processors
-	* ARM 64-bit processors
-	* RISC-V 64-bit processors
-* macOS
-	* AMD/Intel 64-bit processors
-	* ARM 64-bit processors
-* Windows
-	* AMD/Intel 64-bit processors
-	* ARM 64-bit processors
-
+#### Development
+* Using the following `make` command will save a `cocainate` binary with the last version tag and the latest git commit hash:
 ```bash
-make build
+make debug
 ```
 
-Building from source for an individual operating system is available via:
-* Linux
+#### Release
+* Using the following [GoReleaser](https://github.com/goreleaser/goreleaser) command with a version `git` tag and a clean `git` state:
 ```bash
-make linux
+goreleaser build --rm-dist
 ```
-* macOS
-```bash
-make mac
-```
-* Windows
-```bash
-make windows
-```
-
-All binary artificats are stored in the `bin` child directory in the codebase's root directory.
+* All release artificats will stored in the `dist` child directory in the codebase's root directory:
+	* compressed package archives with:
+		* a `cocainate` binary
+		* manual page
+		* shell completion scripts
+	* checksums
+	* change log
 
 ## Copyright
 `cocainate` is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
