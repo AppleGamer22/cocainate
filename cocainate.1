@@ -18,7 +18,7 @@ to keep the screen awake.
 .SH COCAINATE OPTIONS
 .B \-d, \-\-duration
 Accepts a duration for timed screensaver inhibitation. If the
-.B \-\-pid
+.B \-p
 flag is provided, the
 .B \-d
 flag's value is used as process polling interval.
@@ -46,7 +46,7 @@ minutes:
 hours:
 .BI h
 
-.B \-\-pid
+.B \-p, \-\-pid
 Accepts a running process ID (PID) such that the screensaver inhibitation will terminate as soon as the provided process has termination. The delay between the termination of the provided process and the termination of screensaver inhibitation depends on the
 .B \-d
 flag (which must be provided).
@@ -73,7 +73,7 @@ Keep the screen awake for 1 hour, 10 minutes and 10 seconds
 \fIcocainate\fR -d 1us
 Keep the screen awake for 1 microsecond
 .TP
-\fIcocainate\fR --pid 1234 -d 5s
+\fIcocainate\fR -p 1234 -d 5s
 Keep the screen awake while process 1234 runs and check every 5 seconds that process 1234 still runs.
 
 .SH BUGS

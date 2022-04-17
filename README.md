@@ -57,9 +57,9 @@ This is an optional flag that accepts a duration string (see [Go's `time.ParseDu
 * 1 hour, 10 minutes and 10 seconds: `-d 1h10m10s`
 * 1 microsecond: `-d 1us`
 
-If the `--pid` flag is provided, the `-d` flag's value is used as process polling interval.
+If the `-p` flag is provided, the `-d` flag's value is used as process polling interval.
 
-### Root `--pid` Flag
+### Root `-p`/`--pid` Flag
 This is an optional flag that accepts a process ID (PID). If a valid PID is provided, the program will wait until that process is terminated. The delay between the termination of the provided process and the termination of screensaver inhibitation depends on the `-d` flag (which must be provided).
 
 ### `version` Sub-command

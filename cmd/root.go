@@ -45,6 +45,6 @@ var RootCommand = &cobra.Command{
 
 func init() {
 	RootCommand.Flags().DurationVarP(&duration, "duration", "d", 0, "duration with units ns, us (or µs), ms, s, m, h")
-	RootCommand.Flags().IntVar(&pid, "pid", 0, "process ID")
+	RootCommand.Flags().IntVarP(&pid, "pid", "p", 0, "process ID")
 	RootCommand.SetVersionTemplate("{{.Version}}\n")
 }
