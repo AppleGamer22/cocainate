@@ -19,6 +19,7 @@ completion:
 
 manual:
 	sed -i "s/vVERSION/$(VERSION)/" cocainate.1
+	sed -i "s/DATE/$(shell date -I)/" cocainate.1
 
 clean:
 	rm -rf cocainate bin dist cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
