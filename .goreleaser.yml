@@ -101,8 +101,8 @@ release:
     name: cocainate
   discussion_category_name: General
   footer: |
-    # Installation
-    ## Arch Linux Distributions
+    ## Installation
+    ### Arch Linux Distributions
     * [`yay`](https://github.com/Jguer/yay):
     ```bash
     yay -S cocainate-bin
@@ -112,7 +112,7 @@ release:
     paru -S cocainate-bin
     ```
 
-    ## macOS
+    ### macOS
     * [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
     ```bash
     brew install AppleGamer22/tap/cocainate
