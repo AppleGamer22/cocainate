@@ -36,17 +36,21 @@ archives:
   - builds:
     - linux
     - mac
-    - windows
     replacements:
       darwin: mac
-    format_overrides:
-      - goos: windows
-        format: zip
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     files:
       - cocainate.bash
       - cocainate.fish
       - cocainate.zsh
+      - cocainate.1
+  - builds:
+      - windows
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
       - cocainate.ps1
       - cocainate.1
 nfpms:
