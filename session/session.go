@@ -29,7 +29,7 @@ Wait can be called only after Start has been called successfully.
 
 Wait will block further execution until the user send an interrupt signal, or until the session duration has passed.
 
-A non-nil error is returned if the D-BUS session connection fails, or if the un-inhabitation call fails.
+A non-nil error is returned if the un-inhabitation call fails.
 */
 func (s *Session) Wait() error {
 	if !s.Active() {
