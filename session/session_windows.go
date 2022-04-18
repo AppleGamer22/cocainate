@@ -17,7 +17,7 @@ type Session struct {
 	sync.Mutex
 	PID      int
 	Duration time.Duration
-	signals  chan os.Signal
+	Signals  chan os.Signal
 	active   bool
 }
 
