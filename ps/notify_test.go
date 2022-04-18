@@ -20,7 +20,7 @@ func TestNotify(t *testing.T) {
 		if runtime.GOOS != "windows" {
 			return exec.Command("man", "man")
 		}
-		return exec.Command("help")
+		return exec.Command("powershell", "-c", "pause", ">", "$null")
 	}()
 
 	err := cmd.Start()
@@ -45,6 +45,11 @@ func TestNotify(t *testing.T) {
 
 	go func() {
 		time.Sleep(time.Nanosecond * 5)
+		// for range time.NewTicker(time.Nanosecond).C {
+		// 	if exists, err := process.PidExists(int32(pid)); exists && err == nil {
+		// 		break
+		// 	}
+		// }
 		err := cmd.Process.Kill()
 		assert.NoError(t, err)
 		wg.Done()
