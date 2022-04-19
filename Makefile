@@ -18,8 +18,8 @@ completion:
 	go run . completion powershell > cocainate.ps1
 
 manual:
-	sed -i "s/vVERSION/$(VERSION)/" cocainate.1
-	sed -i "s/DATE/$(shell date -Idate)/" cocainate.1
+	sed -i '' "s/vVERSION/$(VERSION)/" cocainate.1
+	sed -i '' "s/DATE/$(shell date -Idate)/" cocainate.1
 
 clean:
 	rm -rf cocainate bin dist cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
