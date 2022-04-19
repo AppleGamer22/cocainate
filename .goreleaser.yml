@@ -33,7 +33,8 @@ builds:
       - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
       - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
 archives:
-  - builds:
+  - id: unix
+    builds:
     - linux
     - mac
     replacements:
@@ -44,7 +45,8 @@ archives:
       - cocainate.fish
       - cocainate.zsh
       - cocainate.1
-  - builds:
+  - id: windows
+    builds:
       - windows
     format_overrides:
       - goos: windows
