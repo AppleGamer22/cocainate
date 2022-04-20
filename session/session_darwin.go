@@ -51,7 +51,7 @@ This method is recommended for uses in which the session is required to terminat
 */
 func (s *Session) Stop() error {
 	if !s.Active() {
-		return errors.New("Wait can be called only after Start has been called successfully")
+		return errors.New("Stop can be called only after Start has been called successfully")
 	}
 
 	if err := s.caffeinate.Process.Kill(); err != nil {
