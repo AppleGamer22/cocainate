@@ -38,7 +38,7 @@ func (s *Session) Wait() error {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
 
-	if s.Duration > 0 && s.PID != 0 && s.PID != os.Getpid() {
+	if s.Duration > 0 && s.PID != 0 && s.PID != os.Getppid() && s.PID != os.Getpid() {
 		select {
 		case psError := <-ps.Notify(int32(s.PID), s.Duration):
 			if stoppingError := s.Stop(); stoppingError != nil && psError != nil {
