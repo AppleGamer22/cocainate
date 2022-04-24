@@ -167,3 +167,14 @@ brews:
       bash_completion.install "cocainate.bash" => "cocainate"
       fish_completion.install "cocainate.fish"
       zsh_completion.install "cocainate.zsh" => "_cocainate"
+scoop:
+  bucket:
+    owner: AppleGamer22
+    name: scoop-bucket
+    token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+  commit_author:
+    name: Omri Bornstein
+    email: omribor@gmail.com
+  homepage: https://github.com/AppleGamer22/cocainate
+  description: Cross-platform caffeinate alternative.
+  license: GPL-3.0

@@ -28,9 +28,15 @@ brew install AppleGamer22/tap/cocainate
 
 ### Windows (working progress)
 * [`winget`](https://github.com/microsoft/winget-cli):
-```bash
+```powershell
 winget install AppleGamer22.cocainate
 ```
+* [`scoop`](https://github.com/ScoopInstaller/Scoop):
+```powershell
+scoop bucket add AppleGamer22 https://github.com/AppleGamer22/scoop-bucket.git
+scoop install AppleGamer22/cocainate
+```
+
 ### Other
 * `go`:
 	* Does not ship with:
