@@ -3,12 +3,24 @@ updates:
   - package-ecosystem: gomod
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: daily
     assignees:
       - AppleGamer22
     reviewers:
       - AppleGamer22
     commit-message:
       prefix: chore
-    lables:
+    labels:
+      - dependencies
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    assignees:
+        - AppleGamer22
+    reviewers:
+      - AppleGamer22
+    commit-message:
+      prefix: chore
+    labels:
       - dependencies
