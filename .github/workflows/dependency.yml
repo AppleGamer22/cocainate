@@ -1,0 +1,19 @@
+name: Dependency Review
+on:
+  pull_request:
+    types:
+      - opened
+      - closed
+      - reopened
+permissions:
+  contents: read
+jobs:
+  dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Source Code
+        uses: actions/checkout@v3
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v2
+        with:
+          fail-on-severity: low
