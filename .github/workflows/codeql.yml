@@ -27,6 +27,6 @@ jobs:
       with:
         languages: go
     - name: Build
-      run: make server
+      run: make debug
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
