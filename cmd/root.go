@@ -36,7 +36,7 @@ var RootCommand = &cobra.Command{
 		}
 
 		if flag.Lookup("test.v") == nil {
-			fmt.Print("\033[2K\r")
+			fmt.Print("\r")
 		}
 
 		return nil

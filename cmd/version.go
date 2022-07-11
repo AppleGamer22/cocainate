@@ -12,11 +12,6 @@ var Hash = "development"
 
 var verbose bool
 
-const (
-	githubReleaseURLPrefix = "https://github.com/AppleGamer22/cocainate/releases/tag/v"
-	githubCommitURLPrefix  = "https://github.com/AppleGamer22/cocainate/commit/"
-)
-
 var versionCommand = &cobra.Command{
 	Use:   "version",
 	Short: "print version",
@@ -24,11 +19,11 @@ var versionCommand = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if verbose {
 			if Version != "development" {
-				fmt.Printf("version: \t%s%s\n", githubReleaseURLPrefix, Version)
+				fmt.Printf("version: \t%s\n", Version)
 			}
 
 			if Hash != "development" {
-				fmt.Printf("commit: \t%s%s\n", githubCommitURLPrefix, Hash)
+				fmt.Printf("commit: \t%s\n", Hash)
 			}
 			fmt.Printf("compiler: \t%s (%s)\n", runtime.Version(), runtime.Compiler)
 			fmt.Printf("platform: \t%s/%s\n", runtime.GOOS, runtime.GOARCH)
