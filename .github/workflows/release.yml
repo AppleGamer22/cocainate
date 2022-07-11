@@ -6,6 +6,8 @@ on:
       - '!*alpha*'
       - '!*beta*'
       - '!*rc*'
+permissions:
+  contents: write
 jobs:
   github_release:
     runs-on: ubuntu-latest
