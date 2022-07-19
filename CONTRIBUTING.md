@@ -34,19 +34,15 @@ git clone https://github.com/AppleGamer22/cocainate
 cd cocainate
 # Assign the original repo to a remote called "GitHub"
 git remote add GitHub https://github.com/AppleGamer22/cocainate
-# Create a ew branch from HEAD
+# Create a new branch from HEAD
 git branch <your branch>
 ```
 2. If you've added code that should be tested, add tests (`.spec.ts` files).
 3. If you've changed APIs, update the [documentation](https://tsdoc.org/).
 4. Ensure the test suite passes.
 ```bash
-# Run client-side & server-side tests
-npm test
-# Run client-side tests
-npm run test:client
-# Run server-side tests
-npm run test:server
+# Run library tests
+go test ./session ./ps
 ```
 5. Commit & push your changes to your branch
 ```bash
