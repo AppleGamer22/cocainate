@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-//go:ignore
 func main() {
 	now := time.Now()
 	year := now.Year()

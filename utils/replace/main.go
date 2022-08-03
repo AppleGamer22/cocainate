@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 
@@ -28,18 +30,29 @@ var rootCommand = cobra.Command{
 	},
 	RunE: func(_ *cobra.Command, args []string) error {
 		path := args[0]
-		file, err := os.Open(path)
+		file, err := os.OpenFile(path, os.O_RDWR, 0)
 		if err != nil {
 			return err
 		}
 		defer file.Close()
 		scanner := bufio.NewScanner(file)
+		var buffer bytes.Buffer
 		for scanner.Scan() {
 			line := scanner.Text()
 			updatedLine := strings.ReplaceAll(line, before, after)
-			fmt.Println(updatedLine)
+			if _, err := buffer.WriteString(updatedLine); err != nil {
+				fmt.Println(err)
+			}
+			if _, err := buffer.WriteRune('\n'); err != nil {
+				fmt.Println(err)
+			}
 		}
-		return nil
+		if err := scanner.Err(); err != nil {
+			return err
+		}
+		file.Seek(0, io.SeekStart)
+		_, err = io.Copy(file, &buffer)
+		return err
 	},
 }
 

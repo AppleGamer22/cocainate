@@ -18,13 +18,8 @@ completion:
 	go run . completion powershell > cocainate.ps1
 
 manual:
-	if [[ "$$OSTYPE" == "linux-gnu"* ]]; then \
-		sed -i "s/vVERSION/$(VERSION)/" cocainate.1; \
-		sed -i "s/DATE/$(shell date -Idate)/" cocainate.1; \
-	elif [[ "$$OSTYPE" == "darwin"* ]]; then \
-		sed -I '' "s/vVERSION/$(VERSION)/" cocainate.1; \
-		sed -I '' "s/DATE/$(shell date -Idate)/" cocainate.1; \
-	fi
+	go run ./utils/replace cocainate.1 -b "vVERSION" -a "$(VERSION)"
+	go run ./utils/replace cocainate.1 -b "DATE" -a "$(shell go run ./utils/date)"
 
 clean:
 	rm -rf cocainate bin dist cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1
