@@ -40,17 +40,16 @@ var rootCommand = cobra.Command{
 		for scanner.Scan() {
 			line := scanner.Text()
 			updatedLine := strings.ReplaceAll(line, before, after)
-			if _, err := buffer.WriteString(updatedLine); err != nil {
-				fmt.Println(err)
-			}
-			if _, err := buffer.WriteRune('\n'); err != nil {
-				fmt.Println(err)
+			if _, err := fmt.Fprintln(&buffer, updatedLine); err != nil {
+				return err
 			}
 		}
 		if err := scanner.Err(); err != nil {
 			return err
 		}
-		file.Seek(0, io.SeekStart)
+		if _, err := file.Seek(0, io.SeekStart); err != nil {
+			return err
+		}
 		_, err = io.Copy(file, &buffer)
 		return err
 	},
