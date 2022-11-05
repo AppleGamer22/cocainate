@@ -49,9 +49,12 @@ func (s *Session) Wait() error {
 		case <-s.Signals:
 		}
 	} else if s.Duration > 0 {
+		// https://pkg.go.dev/time#After
+		timer := time.NewTimer(s.Duration)
 		select {
-		case <-time.After(s.Duration):
+		case <-timer.C:
 		case <-s.Signals:
+			timer.Stop()
 		}
 	} else {
 		<-s.Signals
