@@ -14,6 +14,6 @@ jobs:
       - name: Pull Source Code
         uses: actions/checkout@v3.1.0
       - name: Dependency Review
-        uses: actions/dependency-review-action@v2
+        uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: low
