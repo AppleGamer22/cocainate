@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set-up Go
-        uses: actions/setup-go@v3.4.0
+        uses: actions/setup-go@v3.5.0
         with:
-          go-version: "1.19.2"
+          go-version: stable
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF##*/v}
