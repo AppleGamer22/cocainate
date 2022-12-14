@@ -19,7 +19,7 @@ jobs:
       - name: Fetch All Tags
         run: git fetch --force --tags
       - name: Set-up Go
-        uses: actions/setup-go@v3.4.0
+        uses: actions/setup-go@v3.5.0
         with:
           go-version: "1.19.2"
       - name: Build, Package & Distribute
