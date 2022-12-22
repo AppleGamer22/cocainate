@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: gomod
-    directory: "/"
+    directory: /
     schedule:
       interval: daily
     assignees:
@@ -17,7 +17,7 @@ updates:
     schedule:
       interval: daily
     assignees:
-        - AppleGamer22
+      - AppleGamer22
     reviewers:
       - AppleGamer22
     commit-message:
