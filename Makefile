@@ -20,6 +20,8 @@ completion:
 manual:
 	go run ./utils/replace cocainate.1 -b "vVERSION" -a "$(VERSION)"
 	go run ./utils/replace cocainate.1 -b "DATE" -a "$(shell go run ./utils/date)"
+	# go run . manual | man -l -
+	go run . manual > cocainate.1
 
 clean:
 	rm -rf cocainate bin dist cocainate.bash cocainate.fish cocainate.zsh cocainate.ps1

@@ -71,6 +71,7 @@ nfpms:
       - apk
       - deb
       - rpm
+      - archlinux
     contents:
       - src: cocainate.1
         dst: /usr/share/man/man1/cocainate.1
@@ -167,3 +168,5 @@ brews:
       bash_completion.install "cocainate.bash" => "cocainate"
       fish_completion.install "cocainate.fish"
       zsh_completion.install "cocainate.zsh" => "_cocainate"
+sboms:
+  - artifacts: archive
