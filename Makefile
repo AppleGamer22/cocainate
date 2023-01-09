@@ -2,11 +2,11 @@ SHELL:=/bin/bash
 VERSION:=$(shell git describe --tags --abbrev=0)
 HASH:=$(shell git rev-list -1 HEAD)
 PACKAGE:=github.com/AppleGamer22/cocainate
-LDFLAGS:=-ldflags="-X '$(PACKAGE)/cmd.Version=$(subst v,,$(VERSION))' -X '$(PACKAGE)/cmd.Hash=$(HASH)'"
+LDFLAGS:=-ldflags="-X '$(PACKAGE)/commands.Version=$(subst v,,$(VERSION))' -X '$(PACKAGE)/commands.Hash=$(HASH)'"
 
 test:
 	go clean -testcache
-	go test -v -race -cover ./session ./ps ./cmd
+	go test -v -race -cover ./session ./ps ./commands
 
 debug:
 	go build -race $(LDFLAGS) .

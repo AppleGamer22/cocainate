@@ -12,8 +12,8 @@ builds:
       - arm64
       - riscv64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
   - id: mac
     goos:
       - darwin
@@ -21,8 +21,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
   - id: windows
     goos:
       - windows
@@ -30,8 +30,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
 archives:
   - id: unix
     builds:

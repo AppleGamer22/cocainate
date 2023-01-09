@@ -15,7 +15,8 @@
 		"pkgdir",
 		"rber",
 		"rberrors",
-		"riscv"
+		"riscv",
+		"roff"
 	],
 	"files.associations": {
 		"*.cff": "yaml"

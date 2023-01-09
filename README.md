@@ -85,7 +85,7 @@ This is an optional flag that accepts a process ID (PID). If a valid PID is prov
 
 ## Common Contributor Routines
 ### Testing
-Running the following command will run `go test` on the cmd and session sub-modules:
+Running the following command will run `go test` on the commands and session sub-modules:
 ```bash
 make test
 ```
