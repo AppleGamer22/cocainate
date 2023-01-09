@@ -23,7 +23,7 @@ jobs:
         with:
           go-version: stable
       - name: Set-up Syft
-        uses: anchore/sbom-action/download-syft
+        uses: anchore/sbom-action/download-syft@v0.13.1
       - name: Build, Package & Distribute
         uses: goreleaser/goreleaser-action@v4
         with:
