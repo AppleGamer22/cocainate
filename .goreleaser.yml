@@ -12,8 +12,8 @@ builds:
       - arm64
       - riscv64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
   - id: mac
     goos:
       - darwin
@@ -21,8 +21,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
   - id: windows
     goos:
       - windows
@@ -30,8 +30,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Version={{ .Version }}'
-      - -X 'github.com/AppleGamer22/cocainate/cmd.Hash={{ .FullCommit }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{ .Version }}'
+      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{ .FullCommit }}'
 archives:
   - id: unix
     builds:
@@ -71,6 +71,7 @@ nfpms:
       - apk
       - deb
       - rpm
+      - archlinux
     contents:
       - src: cocainate.1
         dst: /usr/share/man/man1/cocainate.1
@@ -167,3 +168,5 @@ brews:
       bash_completion.install "cocainate.bash" => "cocainate"
       fish_completion.install "cocainate.fish"
       zsh_completion.install "cocainate.zsh" => "_cocainate"
+sboms:
+  - artifacts: archive
