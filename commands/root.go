@@ -45,7 +45,7 @@ var RootCommand = &cobra.Command{
 
 func init() {
 	RootCommand.Flags().DurationVarP(&duration, "duration", "d", 0, "duration with units ns, us (or µs), ms, s, m, h")
-	RootCommand.Flags().IntVarP(&pid, "pid", "p", 0, "process ID")
+	RootCommand.Flags().IntVarP(&pid, "pid", "p", 0, "a running process ID, duration (used as polling interval) must be provided")
 	// RootCommand.MarkFlagsRequiredTogether("pid", "duration")
 	RootCommand.SetVersionTemplate("{{.Version}}\n")
 }

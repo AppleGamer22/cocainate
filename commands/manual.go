@@ -18,9 +18,9 @@ var manualCommand = &cobra.Command{
 			return err
 		}
 
-		manualPage = manualPage.WithSection("Bugs", fmt.Sprintf("Please report bugs to our GitHub page https://github.com/AppleGamer22/%s/issues", manualPage.Root.Name))
-		manualPage = manualPage.WithSection("Authors", "Omri Bornstein <omribor@gmail.com>")
-		manualPage = manualPage.WithSection("Copyright", `cocainate is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
+		manualPage.WithSection("Bugs", fmt.Sprintf("Please report bugs to our GitHub page https://github.com/AppleGamer22/%s/issues", manualPage.Root.Name))
+		manualPage.WithSection("Authors", "Omri Bornstein <omribor@gmail.com>")
+		manualPage.WithSection("Copyright", `cocainate is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
 cocainate is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.`)
 		_, err = fmt.Println(manualPage.Build(roff.NewDocument()))
 		return err

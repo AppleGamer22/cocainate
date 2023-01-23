@@ -5,6 +5,7 @@ cocainate.bash
 cocainate.fish
 cocainate.zsh
 cocainate.ps1
+cocainate.1
 bin
 vendor
 .vagrant
