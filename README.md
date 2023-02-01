@@ -99,7 +99,7 @@ make debug
 #### Release
 * Using the following [GoReleaser](https://github.com/goreleaser/goreleaser) command with a version `git` tag and a clean `git` state:
 ```bash
-goreleaser build --rm-dist
+goreleaser build --clean
 ```
 * All release artificats will stored in the `dist` child directory in the codebase's root directory:
 	* compressed package archives with:
