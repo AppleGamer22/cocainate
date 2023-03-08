@@ -1,8 +1,7 @@
-package progressbar_test
+package progress_bar
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"
