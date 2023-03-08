@@ -2,6 +2,7 @@ package progressbar_test
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"
