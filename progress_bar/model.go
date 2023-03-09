@@ -10,27 +10,27 @@ import (
 )
 
 const (
-	padding  = 2
+	// padding  = 2
 	maxWidth = 80
 )
 
-var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#626262")).Render
+var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
 
 type model struct {
 	duration   time.Duration
 	amount     float64
 	percentage float64
 	p          progress.Model
-	channel    chan bool
+	// channel    chan bool
 }
 
 func New(duration time.Duration) *model {
 	return &model{
 		duration:   duration,
-		amount:     float64(duration/time.Second) / float64(duration),
-		percentage: 0.0,
-		p:          progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C")),
-		channel:    make(chan bool, 1),
+		amount:     1 / duration.Seconds(),
+		percentage: 0,
+		p:          progress.New(progress.WithSolidFill("#FFFFFF")),
+		// channel:    make(chan bool, 1),
 	}
 }
 
