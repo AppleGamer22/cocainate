@@ -14,6 +14,8 @@ const (
 	maxWidth = 80
 )
 
+var quitMessage = tea.Sequence(tea.ShowCursor, tea.Quit)
+
 var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
 
 type model struct {
@@ -41,7 +43,7 @@ func (m model) Init() tea.Cmd {
 func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	switch message := message.(type) {
 	case tea.KeyMsg:
-		return m, tea.Quit
+		return m, quitMessage
 	case tea.WindowSizeMsg:
 		m.p.Width = message.Width
 		if m.p.Width > maxWidth {
@@ -50,9 +52,8 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case time.Time:
 		m.percentage += m.amount
-		if m.percentage > 1.0 {
-			m.percentage = 1.0
-			return m, tea.Quit
+		if m.percentage >= 1.0 {
+			return m, quitMessage
 		}
 		return m, tickCommand()
 	default:
@@ -62,7 +63,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return fmt.Sprintf("\n%s\n%s/%s\n%s", m.p.ViewAs(m.percentage), time.Duration(float64(m.duration)*m.percentage), m.duration, helpStyle("Press any key to quit"))
+	return fmt.Sprintf("%s\n%s/%s\n%s", m.p.ViewAs(m.percentage), time.Duration(float64(m.duration)*m.percentage), m.duration, helpStyle("Press any key to quit"))
 }
 
 func tickCommand() tea.Cmd {

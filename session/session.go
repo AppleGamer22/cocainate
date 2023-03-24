@@ -53,10 +53,8 @@ func (s *Session) Wait() error {
 	} else if s.Duration > 0 {
 		program := tea.NewProgram(progress_bar.New(s.Duration))
 		go func() {
-			if _, err := program.Run(); err != nil {
-				s.Signals <- os.Interrupt
-				fmt.Println(err)
-			}
+			program.Run()
+			s.Signals <- os.Interrupt
 		}()
 		// https://pkg.go.dev/time#After
 		timer := time.NewTimer(s.Duration)
