@@ -8,7 +8,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/AppleGamer22/cocainate/progress_bar"
 	"github.com/AppleGamer22/cocainate/ps"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 /*
@@ -49,12 +51,20 @@ func (s *Session) Wait() error {
 		case <-s.Signals:
 		}
 	} else if s.Duration > 0 {
+		program := tea.NewProgram(progress_bar.New(s.Duration))
+		go func() {
+			if _, err := program.Run(); err != nil {
+				s.Signals <- os.Interrupt
+				fmt.Println(err)
+			}
+		}()
 		// https://pkg.go.dev/time#After
 		timer := time.NewTimer(s.Duration)
 		select {
 		case <-timer.C:
 		case <-s.Signals:
 			timer.Stop()
+			program.Kill()
 		}
 	} else {
 		<-s.Signals
