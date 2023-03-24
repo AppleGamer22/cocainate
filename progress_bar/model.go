@@ -63,7 +63,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return fmt.Sprintf("%s\n%s/%s\n%s", m.p.ViewAs(m.percentage), time.Duration(float64(m.duration)*m.percentage), m.duration, helpStyle("Press any key to quit"))
+	return fmt.Sprintf("%s\n%s/%s\n%s", m.p.ViewAs(m.percentage), time.Duration(float64(m.duration)*m.percentage).Round(time.Second), m.duration, helpStyle("Press any key to quit"))
 }
 
 func tickCommand() tea.Cmd {
