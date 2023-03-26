@@ -2,6 +2,7 @@ package progress_bar
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"
@@ -23,17 +24,22 @@ type model struct {
 	amount     float64
 	percentage float64
 	p          progress.Model
-	// channel    chan bool
 }
 
-func New(duration time.Duration) *model {
-	return &model{
+func New(duration time.Duration, signals chan os.Signal) *tea.Program {
+	m := &model{
 		duration:   duration,
 		amount:     1 / duration.Seconds(),
 		percentage: 0,
 		p:          progress.New(progress.WithSolidFill("#FFFFFF")),
-		// channel:    make(chan bool, 1),
 	}
+
+	program := tea.NewProgram(m)
+	go func() {
+		program.Run()
+		signals <- os.Interrupt
+	}()
+	return program
 }
 
 func (m model) Init() tea.Cmd {
