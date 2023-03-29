@@ -15,9 +15,11 @@ const (
 	maxWidth = 80
 )
 
-var quitMessage = tea.Sequence(tea.ShowCursor, tea.Quit)
-
-var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
+var (
+	quitMessage   = tea.Sequence(tea.ShowCursor, tea.Quit)
+	renderMessage = tea.Sequence(tea.ShowCursor, tickCommand())
+	helpStyle     = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
+)
 
 type model struct {
 	duration   time.Duration
@@ -61,7 +63,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 		if m.percentage >= 1.0 {
 			return m, quitMessage
 		}
-		return m, tickCommand()
+		return m, renderMessage
 	default:
 		return m, nil
 	}
