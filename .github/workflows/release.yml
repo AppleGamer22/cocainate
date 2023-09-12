@@ -25,7 +25,7 @@ jobs:
       - name: Set-up Syft
         uses: anchore/sbom-action/download-syft@v0.14.3
       - name: Build, Package & Distribute
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@v5
         with:
           distribution: goreleaser
           version: latest
