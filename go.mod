@@ -3,7 +3,7 @@ module github.com/AppleGamer22/cocainate
 go 1.17
 
 require (
-	github.com/charmbracelet/bubbles v0.16.1
+	github.com/charmbracelet/bubbles v0.17.1
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/godbus/dbus/v5 v5.1.0
