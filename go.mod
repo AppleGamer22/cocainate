@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/charmbracelet/bubbles v0.20.0
-	github.com/charmbracelet/bubbletea v1.1.0
+	github.com/charmbracelet/bubbletea v1.1.1
 	github.com/charmbracelet/lipgloss v0.13.0
 	github.com/godbus/dbus/v5 v5.1.0
 	github.com/muesli/mango-cobra v1.2.0
