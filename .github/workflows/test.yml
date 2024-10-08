@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - name: Pull Source Code
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v4.2.1
       - name: Install Linux-only Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
