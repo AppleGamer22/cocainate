@@ -1,4 +1,3 @@
-SHELL:=/bin/bash
 VERSION:=$(shell git describe --tags --abbrev=0)
 HASH:=$(shell git rev-list -1 HEAD)
 PACKAGE:=github.com/AppleGamer22/cocainate
@@ -9,7 +8,7 @@ test:
 	go test -v -race -cover ./session ./ps ./commands
 
 debug:
-	go build -race $(LDFLAGS) .
+	go build $(LDFLAGS) .
 
 completion:
 	go run . completion bash > cocainate.bash
