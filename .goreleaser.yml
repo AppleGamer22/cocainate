@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
 project_name: cocainate
 before:
   hooks:
@@ -45,10 +46,10 @@ archives:
       {{- end}}_
       {{- .Arch}}
     files:
-      - cocainate.bash
-      - cocainate.fish
-      - cocainate.zsh
-      - cocainate.1
+      - "{{.ProjectName}}.bash"
+      - "{{.ProjectName}}.fish"
+      - "{{.ProjectName}}.zsh"
+      - "{{.ProjectName}}.1"
   - id: windows
     builds:
       - windows
@@ -57,11 +58,10 @@ archives:
         format: zip
     name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}_{{.Arch}}"
     files:
-      - cocainate.ps1
-      - cocainate.1
+      - "{{.ProjectName}}.ps1"
+      - "{{.ProjectName}}.1"
 nfpms:
-  - package_name: cocainate
-    vendor: AppleGamer22
+  - vendor: AppleGamer22
     maintainer: Omri Bornstein <omribor@gmail.com>
     homepage: https://github.com/AppleGamer22/cocainate
     license: GPL-3.0
@@ -77,14 +77,14 @@ nfpms:
       - rpm
       - archlinux
     contents:
-      - src: cocainate.1
-        dst: /usr/share/man/man1/cocainate.1
-      - src: cocainate.bash
-        dst: /usr/share/bash-completion/completions/cocainate
-      - src: cocainate.fish
+      - src: "{{.ProjectName}}.1"
+        dst: /usr/share/man/man1/{{.ProjectName}}.1
+      - src: "{{.ProjectName}}.bash"
+        dst: /usr/share/bash-completion/completions/{{.ProjectName}}
+      - src: "{{.ProjectName}}.fish"
         dst: /usr/share/fish/completions/cocainate.fish
-      - src: cocainate.zsh
-        dst: /usr/share/zsh/site-functions/_cocainate
+      - src: "{{.ProjectName}}.zsh"
+        dst: /usr/share/zsh/site-functions/_{{.ProjectName}}
 changelog:
   use: github
   filters:
@@ -129,6 +129,42 @@ release:
     brew install AppleGamer22/tap/cocainate
     ```
   prerelease: auto
+nix:
+  - repository:
+      owner: AppleGamer22
+      name: nur
+      token: "{{.Env.TAP_GITHUB_TOKEN}}"
+    commit_author:
+      name: Omri Bornstein
+      email: omribor@gmail.com
+    homepage: https://github.com/AppleGamer22/cocainate
+    description: Cross-platform caffeinate alternative.
+    license: gpl3Only
+    ids:
+      - unix
+    install: |
+      mkdir -p $out/bin
+      cp -vr ./{{.ProjectName}} $out/bin/{{.ProjectName}}
+      installManPage ./{{.ProjectName}}.1
+      installShellCompletion ./{{.ProjectName}}.*sh
+brews:
+  - repository:
+      owner: AppleGamer22
+      name: homebrew-tap
+      token: "{{.Env.TAP_GITHUB_TOKEN}}"
+    download_strategy: CurlDownloadStrategy
+    commit_author:
+      name: Omri Bornstein
+      email: omribor@gmail.com
+    homepage: https://github.com/AppleGamer22/cocainate
+    description: Cross-platform caffeinate alternative.
+    license: GPL-3.0
+    install: |
+      bin.install "{{.ProjectName}}"
+      man1.install "{{.ProjectName}}.1"
+      bash_completion.install "{{.ProjectName}}.bash" => "{{.ProjectName}}"
+      fish_completion.install "{{.ProjectName}}.fish"
+      zsh_completion.install "{{.ProjectName}}.zsh" => "_{{.ProjectName}}"
 aurs:
   - homepage: https://github.com/AppleGamer22/cocainate
     description: Cross-platform caffeinate alternative.
@@ -146,31 +182,13 @@ aurs:
       - fish
       - zsh
     package: |
-      install -Dm755 cocainate "${pkgdir}/usr/bin/cocainate"
-      install -Dm644 cocainate.1 "${pkgdir}/usr/share/man/man1/cocainate.1"
-      install -Dm644 cocainate.bash "${pkgdir}/usr/share/bash-completion/completions/cocainate"
-      install -Dm644 cocainate.fish "${pkgdir}/usr/share/fish/vendor_completions.d/cocainate.fish"
-      install -Dm644 cocainate.zsh "${pkgdir}/usr/share/zsh/site-functions/_cocainate"
+      install -Dm755 {{.ProjectName}} "${pkgdir}/usr/bin/{{.ProjectName}}"
+      install -Dm644 {{.ProjectName}}.1 "${pkgdir}/usr/share/man/man1/{{.ProjectName}}.1"
+      install -Dm644 {{.ProjectName}}.bash "${pkgdir}/usr/share/bash-completion/completions/{{.ProjectName}}"
+      install -Dm644 {{.ProjectName}}.fish "${pkgdir}/usr/share/fish/vendor_completions.d/{{.ProjectName}}.fish"
+      install -Dm644 {{.ProjectName}}.zsh "${pkgdir}/usr/share/zsh/site-functions/_{{.ProjectName}}"
     commit_author:
       name: Omri Bornstein
       email: omribor@gmail.com
-brews:
-  - tap:
-      owner: AppleGamer22
-      name: homebrew-tap
-      token: "{{.Env.TAP_GITHUB_TOKEN}}"
-    download_strategy: CurlDownloadStrategy
-    commit_author:
-      name: Omri Bornstein
-      email: omribor@gmail.com
-    homepage: https://github.com/AppleGamer22/cocainate
-    description: Cross-platform caffeinate alternative.
-    license: GPL-3.0
-    install: |
-      bin.install "cocainate"
-      man1.install "cocainate.1"
-      bash_completion.install "cocainate.bash" => "cocainate"
-      fish_completion.install "cocainate.fish"
-      zsh_completion.install "cocainate.zsh" => "_cocainate"
 sboms:
   - artifacts: archive
