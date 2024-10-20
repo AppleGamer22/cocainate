@@ -14,4 +14,4 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF##*/v}
       - name: Publish Documentation
-        run: GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/AppleGamer22/cocainate@v${{steps.get_version.outputs.VERSION}}
+        run: GOPROXY=https://proxy.golang.org GO111MODULE=on go install github.com/AppleGamer22/cocainate@v${{steps.get_version.outputs.VERSION}}
