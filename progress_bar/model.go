@@ -16,9 +16,8 @@ const (
 )
 
 var (
-	quitMessage   = tea.Sequence(tea.ShowCursor, tea.Quit)
-	renderMessage = tea.Sequence(tea.ShowCursor, tickCommand())
-	helpStyle     = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
+	quitMessage = tea.Sequence(tea.ShowCursor, tea.Quit)
+	helpStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF")).Render
 )
 
 type model struct {
@@ -63,7 +62,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 		if m.percentage >= 1.0 {
 			return m, quitMessage
 		}
-		return m, renderMessage
+		return m, renderMessage()
 	default:
 		return m, nil
 	}
@@ -71,11 +70,23 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return fmt.Sprintf("%s\n%s/%s\n%s", m.p.ViewAs(m.percentage), time.Duration(float64(m.duration)*m.percentage).Round(time.Second), m.duration, helpStyle("Press any key to quit"))
+	if m.percentage >= 1 {
+		return ""
+	}
+	return fmt.Sprintf(
+		"%s\n%s/%s\n%s",
+		m.p.ViewAs(m.percentage),
+		time.Duration(float64(m.duration)*m.percentage).Round(time.Second), m.duration,
+		helpStyle("Press any key to quit"),
+	)
 }
 
 func tickCommand() tea.Cmd {
 	return tea.Tick(time.Second, func(t time.Time) tea.Msg {
 		return t
 	})
+}
+
+func renderMessage() tea.Cmd {
+	return tea.Sequence(tea.ShowCursor, tickCommand())
 }
