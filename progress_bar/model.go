@@ -60,6 +60,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	case time.Time:
 		m.percentage += m.amount
 		if m.percentage >= 1.0 {
+			m.percentage = 1.0
 			return m, quitMessage
 		}
 		return m, renderMessage()
@@ -70,7 +71,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	if m.percentage >= 1 {
+	if m.percentage >= 1.0 {
 		return ""
 	}
 	return fmt.Sprintf(

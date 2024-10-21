@@ -59,6 +59,9 @@ func (s *Session) Wait(quiet bool) error {
 		timer := time.NewTimer(s.Duration)
 		select {
 		case <-timer.C:
+			if !quiet {
+				program.Wait()
+			}
 		case <-s.Signals:
 			timer.Stop()
 			if !quiet {
