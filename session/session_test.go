@@ -16,7 +16,7 @@ func TestDuration(t *testing.T) {
 	err := s.Start()
 	assert.NoError(t, err)
 
-	err = s.Wait()
+	err = s.Wait(true)
 	assert.NoError(t, err)
 }
 
@@ -29,7 +29,7 @@ func TestInterrupt(t *testing.T) {
 	err = s.Kill()
 	assert.NoError(t, err)
 
-	err = s.Wait()
+	err = s.Wait(true)
 	assert.NoError(t, err)
 }
 
@@ -43,7 +43,7 @@ func TestKill(t *testing.T) {
 	wg.Add(2)
 
 	go func() {
-		err := s.Wait()
+		err := s.Wait(false)
 		assert.NoError(t, err)
 		wg.Done()
 	}()
@@ -70,7 +70,7 @@ func TestStop(t *testing.T) {
 // Test for when Wait is called before Start
 func TestErrors(t *testing.T) {
 	s := session.New(0, 0)
-	err := s.Wait()
+	err := s.Wait(false)
 	assert.Error(t, err)
 
 	err = s.Kill()

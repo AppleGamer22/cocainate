@@ -10,8 +10,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var duration time.Duration
-var pid int
+var (
+	duration time.Duration
+	pid      int
+	quiet    bool
+)
 
 var RootCommand = &cobra.Command{
 	Use:     "cocainate",
@@ -31,7 +34,7 @@ var RootCommand = &cobra.Command{
 			return err
 		}
 
-		if err := s.Wait(); err != nil {
+		if err := s.Wait(quiet); err != nil {
 			return err
 		}
 
@@ -46,6 +49,7 @@ var RootCommand = &cobra.Command{
 func init() {
 	RootCommand.Flags().DurationVarP(&duration, "duration", "d", 0, "duration with units ns, us (or µs), ms, s, m, h")
 	RootCommand.Flags().IntVarP(&pid, "pid", "p", 0, "a running process ID, duration (used as polling interval) must be provided")
+	RootCommand.Flags().BoolVarP(&quiet, "quiet", "q", false, "hide progress bar")
 	// RootCommand.MarkFlagsRequiredTogether("pid", "duration")
 	RootCommand.SetVersionTemplate("{{.Version}}\n")
 }

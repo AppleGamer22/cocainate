@@ -10,6 +10,7 @@ import (
 
 	"github.com/AppleGamer22/cocainate/progress_bar"
 	"github.com/AppleGamer22/cocainate/ps"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 /*
@@ -34,7 +35,7 @@ Wait will block further execution until the user send an interrupt signal, or un
 
 A non-nil error is returned if the un-inhabitation call fails.
 */
-func (s *Session) Wait() error {
+func (s *Session) Wait(quiet bool) error {
 	if !s.Active() {
 		return errors.New("Wait can be called only after Start has been called successfully")
 	}
@@ -50,14 +51,19 @@ func (s *Session) Wait() error {
 		case <-s.Signals:
 		}
 	} else if s.Duration > 0 {
-		program := progress_bar.New(s.Duration, s.Signals)
+		var program *tea.Program
+		if !quiet {
+			program = progress_bar.New(s.Duration, s.Signals)
+		}
 		// https://pkg.go.dev/time#After
 		timer := time.NewTimer(s.Duration)
 		select {
 		case <-timer.C:
 		case <-s.Signals:
 			timer.Stop()
-			program.Kill()
+			if !quiet {
+				program.Kill()
+			}
 		}
 	} else {
 		<-s.Signals
