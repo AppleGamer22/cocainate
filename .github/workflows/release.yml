@@ -23,7 +23,7 @@ jobs:
         with:
           go-version: stable
       - name: Set-up Syft
-        uses: anchore/sbom-action/download-syft@v0.17.4
+        uses: anchore/sbom-action/download-syft@v0.17.5
       - name: Set-up Nix
         uses: cachix/install-nix-action@v30
         with:
