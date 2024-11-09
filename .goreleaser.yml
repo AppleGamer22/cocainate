@@ -13,8 +13,8 @@ builds:
       - arm64
       - riscv64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{.Version}}'
-      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{.FullCommit}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Version={{.Version}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Hash={{.FullCommit}}'
   - id: mac
     goos:
       - darwin
@@ -22,8 +22,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{.Version}}'
-      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{.FullCommit}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Version={{.Version}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Hash={{.FullCommit}}'
   - id: windows
     goos:
       - windows
@@ -31,8 +31,8 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -X 'github.com/AppleGamer22/cocainate/commands.Version={{.Version}}'
-      - -X 'github.com/AppleGamer22/cocainate/commands.Hash={{.FullCommit}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Version={{.Version}}'
+      - -X 'github.com/AppleGamer22/{{.ProjectName}}/commands.Hash={{.FullCommit}}'
 archives:
   - id: unix
     builds:
@@ -63,7 +63,7 @@ archives:
 nfpms:
   - vendor: AppleGamer22
     maintainer: Omri Bornstein <omribor@gmail.com>
-    homepage: https://github.com/AppleGamer22/cocainate
+    homepage: https://github.com/AppleGamer22/{{.ProjectName}}
     license: GPL-3.0
     description: Cross-platform caffeinate alternative.
     file_name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}_{{.Arch}}"
@@ -109,7 +109,7 @@ changelog:
 release:
   github:
     owner: AppleGamer22
-    name: cocainate
+    name: "{{.ProjectName}}"
   discussion_category_name: General
   footer: |
     ## Installation
@@ -172,7 +172,7 @@ nix:
     commit_author:
       name: Omri Bornstein
       email: omribor@gmail.com
-    homepage: https://github.com/AppleGamer22/cocainate
+    homepage: https://github.com/AppleGamer22/{{.ProjectName}}
     description: Cross-platform caffeinate alternative.
     license: gpl3Only
     ids:
@@ -191,7 +191,7 @@ brews:
     commit_author:
       name: Omri Bornstein
       email: omribor@gmail.com
-    homepage: https://github.com/AppleGamer22/cocainate
+    homepage: https://github.com/AppleGamer22/{{.ProjectName}}
     description: Cross-platform caffeinate alternative.
     license: GPL-3.0
     install: |
@@ -201,7 +201,7 @@ brews:
       fish_completion.install "{{.ProjectName}}.fish"
       zsh_completion.install "{{.ProjectName}}.zsh" => "_{{.ProjectName}}"
 aurs:
-  - homepage: https://github.com/AppleGamer22/cocainate
+  - homepage: https://github.com/AppleGamer22/{{.ProjectName}}
     description: Cross-platform caffeinate alternative.
     license: GPL3
     maintainers:
@@ -209,7 +209,7 @@ aurs:
     contributors:
       - Omri Bornstein <omribor@gmail.com>
     private_key: "{{.Env.AUR_SSH_PRIVATE_KEY}}"
-    git_url: ssh://aur@aur.archlinux.org/cocainate-bin.git
+    git_url: ssh://aur@aur.archlinux.org/{{.ProjectName}}-bin.git
     depends:
       - dbus
     optdepends:
