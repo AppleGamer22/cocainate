@@ -82,7 +82,7 @@ nfpms:
       - src: "{{.ProjectName}}.bash"
         dst: /usr/share/bash-completion/completions/{{.ProjectName}}
       - src: "{{.ProjectName}}.fish"
-        dst: /usr/share/fish/completions/cocainate.fish
+        dst: /usr/share/fish/completions/{{.ProjectName}}.fish
       - src: "{{.ProjectName}}.zsh"
         dst: /usr/share/zsh/site-functions/_{{.ProjectName}}
 changelog:
@@ -113,20 +113,55 @@ release:
   discussion_category_name: General
   footer: |
     ## Installation
+    ### Nix Flakes
+    ```nix
+    {
+      inputs = {
+        # or your preferred NixOS channel
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+        applegamer22.url = "github:AppleGamer22/nur";
+      };
+      outputs = { nixpkgs }: {
+        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            pkgs = import nixpkgs {
+              # ...
+              overlays = [
+                (final: prev: {
+                  # ...
+                  ag22 = applegamer22.packages."<your_system>";
+                })
+              ];
+            };
+          };
+          modules = [
+            # or in a separate Nix file
+            ({ pkgs, ... }: {
+              programs.nix-ld.enable = true;
+              environment.systemPackages = with pkgs; [
+                ag22.{{.ProjectName}}
+              ];
+            })
+            # ...
+          ];
+        };
+      };
+    }
+    ```
     ### Arch Linux Distributions
     * [`yay`](https://github.com/Jguer/yay):
     ```bash
-    yay -S cocainate-bin
+    yay -S {{.ProjectName}}-bin
     ```
     * [`paru`](https://github.com/morganamilo/paru):
     ```bash
-    paru -S cocainate-bin
+    paru -S {{.ProjectName}}-bin
     ```
 
     ### macOS
-    * [Homebrew Tap](https://github.com/AppleGamer22/homebrew-cocainate):
+    * [Homebrew Tap](https://github.com/AppleGamer22/homebrew-tap):
     ```bash
-    brew install AppleGamer22/tap/cocainate
+    brew install AppleGamer22/tap/{{.ProjectName}}
     ```
   prerelease: auto
 nix:

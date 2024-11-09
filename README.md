@@ -10,6 +10,41 @@ The program's functionality and name are inspired by [macOS's `caffeinate`](http
 This name is simply a stupid ~~pun~~, therefore **I do not condone and do not promote drug use**, for more information: [Wikipedia](https://en.wikipedia.org/wiki/Cocaine_(song)).
 
 ## Installation
+### Nix Flakes
+```nix
+{
+  inputs = {
+    # or your preferred NixOS channel
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    applegamer22.url = "github:AppleGamer22/nur";
+  };
+  outputs = { nixpkgs }: {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        pkgs = import nixpkgs {
+          # ...
+          overlays = [
+            (final: prev: {
+              # ...
+              ag22 = applegamer22.packages."<your_system>";
+            })
+          ];
+        };
+      };
+      modules = [
+        # or in a separate Nix file
+        ({ pkgs, ... }: {
+          programs.nix-ld.enable = true;
+          environment.systemPackages = with pkgs; [
+            ag22.cocainate
+          ];
+        })
+        # ...
+      ];
+    };
+  };
+}
+```
 ### Arch Linux Distributions
 * [`yay`](https://github.com/Jguer/yay):
 ```bash
