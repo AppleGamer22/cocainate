@@ -19,7 +19,7 @@ jobs:
       - name: Fetch All Tags
         run: git fetch --force --tags
       - name: Set-up Go
-        uses: actions/setup-go@v6.0.0
+        uses: actions/setup-go@v6.1.0
         with:
           go-version: stable
       - name: Set-up Syft
