@@ -29,7 +29,7 @@ jobs:
         with:
           github_access_token: ${{secrets.GITHUB_TOKEN}}
       - name: Build, Package & Distribute
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           distribution: goreleaser
           version: latest
