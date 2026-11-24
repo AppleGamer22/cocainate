@@ -25,7 +25,7 @@ jobs:
       - name: Set-up Syft
         uses: anchore/sbom-action/download-syft@v0.24.3
       - name: Set-up Nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@v32
         with:
           github_access_token: ${{secrets.GITHUB_TOKEN}}
       - name: Build, Package & Distribute
